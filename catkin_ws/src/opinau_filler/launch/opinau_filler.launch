@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<metadata>
+
+<launch>
+
+<node pkg="opinau_filler" type= "brain" name = "brain" />
+<node pkg="opinau_filler" type= "debug_purpose_listener" name = "debug_purpose_listener" />
+<node pkg="opinau_filler" type= "debug_purpose_listener" name = "debug_purpose_listener2" />
+<node pkg="opinau_filler" type= "key_input_simple_node" name = "key_input_simple_node" output="screen" launch-prefix="gnome-terminal  -- "/>
+
+</launch>
+
+</metadata>
