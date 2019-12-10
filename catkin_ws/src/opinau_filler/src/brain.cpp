@@ -1,4 +1,4 @@
-#include "ros/ros.h"
+#include "ros/ros.h"        //does not affect running
 #include "std_msgs/String.h"
 #include "std_msgs/Bool.h"
 
@@ -53,8 +53,17 @@ int main(int argc, char **argv)
   70    * than we can send them, the number here specifies how many messages to
   71    * buffer up before throwing some away.
   72    */
+  
+  ros::Publisher starwheel1_instructions_pub = n.advertise<std_msgs::String>("starwheel1_instructions", 1000);
+  ros::Publisher starwheel2_instructions_pub = n.advertise<std_msgs::String>("starwheel2_instructions", 1000);
   ros::Publisher conveyor_instructions_pub = n.advertise<std_msgs::String>("conveyor_instructions", 1000);
-ros::Subscriber keyboard_input_sub = n.subscribe("keyboard_input", 1000, chatterCallback);//added
+  ros::Publisher labelprint_instructions_pub = n.advertise<std_msgs::String>("labelprint_instructions", 1000);
+  ros::Publisher labelapply_instructions_pub = n.advertise<std_msgs::String>("labelapply_instructions", 1000);
+  ros::Publisher labelpull_instructions_pub = n.advertise<std_msgs::String>("labelpull_instructions", 1000);  
+  
+  
+  ros::Subscriber keyboard_input_sub = n.subscribe("keyboard_input", 1000, chatterCallback);//added
+  
   ros::Rate loop_rate(10);
 
   /**
@@ -81,9 +90,10 @@ ros::Subscriber keyboard_input_sub = n.subscribe("keyboard_input", 1000, chatter
   98      * given as a template parameter to the advertise<>() call, as was done
   99      * in the constructor above.
  100      */
-    conveyor_instructions_pub.publish(msg);
     
-
+    labelpull_instructions_pub.publish(msg); //test
+    conveyor_instructions_pub.publish(msg);
+     
     ros::spinOnce();
     loop_rate.sleep();
     ++count;

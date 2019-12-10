@@ -26,7 +26,7 @@ int main(int argc, char **argv)
     ros::NodeHandle n;
 
     /* advertise publishing */
-    ros::Publisher conveyor_instructions_pub = n.advertise<std_msgs::String>("conveyor_instructions", 1000);
+    // ros::Publisher conveyor_instructions_pub = n.advertise<std_msgs::String>("conveyor_instructions", 1000);
     ros::Publisher keyboard_input_pub = n.advertise<std_msgs::String>("keyboard_input", 1000);//added
 
     ros::Rate loop_rate(10);
@@ -35,6 +35,14 @@ int main(int argc, char **argv)
   78    * A count of how many messages we have sent. This is used to create
   79    * a unique string for each message.
   80    */
+
+//Try to get name of this node, possibly use as an argument if params dont work out
+// std_msgs::String nodename;
+//nodename = const std::string & ros::this_node::getName	(		 );	
+ROS_INFO("%s",  ros::this_node::getName	());
+
+
+
     int count = 0;
     while (ros::ok())
     {
@@ -42,14 +50,36 @@ int main(int argc, char **argv)
         std_msgs::String msg;
 
         int c = getch(); // call your non-blocking input function
-        if (c == 'y')
-            msg.data = "stop";
-        if (c == 'x')
-            msg.data = "go";
+         if (c == '1')
+            msg.data = "starwheel1_go_message";
+        if (c == 'q')
+            msg.data = "starwheel1_stop_message";
+        if (c == '2')
+            msg.data = "starwheel2_go_message";
+        if (c == 'w')
+            msg.data = "starwheel2_stop_message";
+        if (c == '3')
+            msg.data = "conveyor_go_message";
+        if (c == 'e')
+            msg.data = "conveyor_stop_message";
+        if (c == '4')
+            msg.data = "labelprint_go_message";
+        if (c == 'r')
+            msg.data = "labelprint_stop_message";
+            if (c == '5')
+            msg.data = "labelapply_go_message";
+        if (c == 't')
+            msg.data = "labelapply_stop_message";
+            if (c == '6')
+            msg.data = "labelpull_go_message";
+        if (c == 'z')
+            msg.data = "labelpull_stop_message";
 
         ROS_INFO("%s", msg.data.c_str());
 
-        conveyor_instructions_pub.publish(msg);
+
+
+        //conveyor_instructions_pub.publish(msg);
         keyboard_input_pub.publish(msg);//added
 
         ros::spinOnce();

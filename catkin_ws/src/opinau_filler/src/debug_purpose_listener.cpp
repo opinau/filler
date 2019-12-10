@@ -21,7 +21,7 @@
   48    * You must call one of the versions of ros::init() before using any other
   49    * part of the ROS system.
   50    */
-    ros::init(argc, argv, "debug_purpose_listener");
+    ros::init(argc, argv, "debug_purpose_listener"); 
    
     /**
   54    * NodeHandle is the main access point to communications with the ROS system.
@@ -29,6 +29,8 @@
   56    * NodeHandle destructed will close down the node.
   57    */
      ros::NodeHandle n;
+     
+
    
    /**
   61    * The subscribe() call is how you tell ROS that you want to receive messages
@@ -45,7 +47,19 @@
   72    * is the number of messages that will be buffered up before beginning to throw
   73    * away the oldest ones.
   74    */
-    ros::Subscriber sub = n.subscribe("conveyor_instructions", 1000, chatterCallback);
+    
+  
+    ros::Subscriber sub2 = n.subscribe("labelpull_instructions", 1000, chatterCallback);
+    
+ros::Subscriber sub = n.subscribe("conveyor_instructions", 1000, chatterCallback);
+
+    if (n.hasParam("listening_to_topic")){
+    std::string listening_to_topic;
+    n.getParam("listening_to_topic", listening_to_topic); //from private paramater to local variable
+    ros::Subscriber sub3 = n.subscribe(listening_to_topic, 1000, chatterCallback);
+    }
+
+   
   
      /**
   78    * ros::spin() will enter a loop, pumping callbacks.  With this version, all
