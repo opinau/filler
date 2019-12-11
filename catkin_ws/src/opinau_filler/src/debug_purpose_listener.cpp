@@ -30,7 +30,12 @@
   57    */
      ros::NodeHandle n;
      
-
+//Use node name to determine the instructions that it subscribes to from the brain
+std::string thisnodename = ros::this_node::getName();
+thisnodename.erase(0,1); // removes the default leading backslash that is output by getName 
+ROS_INFO(" NODE NAME -> %s",thisnodename.c_str());
+thisnodename.append("_instructions");
+ROS_INFO(" %s",thisnodename.c_str());
    
    /**
   61    * The subscribe() call is how you tell ROS that you want to receive messages
@@ -49,17 +54,10 @@
   74    */
     
   
-    ros::Subscriber sub2 = n.subscribe("labelpull_instructions", 1000, chatterCallback);
-    
-ros::Subscriber sub = n.subscribe("conveyor_instructions", 1000, chatterCallback);
+       
+ros::Subscriber sub = n.subscribe(thisnodename, 1000, chatterCallback);
 
-    if (n.hasParam("listening_to_topic")){
-    std::string listening_to_topic;
-    n.getParam("listening_to_topic", listening_to_topic); //from private paramater to local variable
-    ros::Subscriber sub3 = n.subscribe(listening_to_topic, 1000, chatterCallback);
-    }
-
-   
+  
   
      /**
   78    * ros::spin() will enter a loop, pumping callbacks.  With this version, all

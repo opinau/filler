@@ -25,9 +25,17 @@ int main(int argc, char **argv)
 
     ros::NodeHandle n;
 
+
+//Use node name to determine the instructions that it publishes to the brain
+std::string thisnodename = ros::this_node::getName();
+thisnodename.erase(0,1); // removes the default leading backslash that is output by getName 
+ROS_INFO(" NODE NAME -> %s",thisnodename.c_str());
+thisnodename.append("_instructions");
+ROS_INFO(" %s",thisnodename.c_str());
+
     /* advertise publishing */
-    // ros::Publisher conveyor_instructions_pub = n.advertise<std_msgs::String>("conveyor_instructions", 1000);
-    ros::Publisher keyboard_input_pub = n.advertise<std_msgs::String>("keyboard_input", 1000);//added
+    ros::Publisher keyboard_instructions_pub = n.advertise<std_msgs::String>(thisnodename, 1000);
+
 
     ros::Rate loop_rate(10);
 
@@ -35,11 +43,6 @@ int main(int argc, char **argv)
   78    * A count of how many messages we have sent. This is used to create
   79    * a unique string for each message.
   80    */
-
-//Try to get name of this node, possibly use as an argument if params dont work out
-// std_msgs::String nodename;
-//nodename = const std::string & ros::this_node::getName	(		 );	
-ROS_INFO("%s",  ros::this_node::getName	());
 
 
 
@@ -78,9 +81,8 @@ ROS_INFO("%s",  ros::this_node::getName	());
         ROS_INFO("%s", msg.data.c_str());
 
 
+        keyboard_instructions_pub.publish(msg);
 
-        //conveyor_instructions_pub.publish(msg);
-        keyboard_input_pub.publish(msg);//added
 
         ros::spinOnce();
         loop_rate.sleep();

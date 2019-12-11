@@ -61,9 +61,8 @@ int main(int argc, char **argv)
   ros::Publisher labelapply_instructions_pub = n.advertise<std_msgs::String>("labelapply_instructions", 1000);
   ros::Publisher labelpull_instructions_pub = n.advertise<std_msgs::String>("labelpull_instructions", 1000);  
   
-  
-  ros::Subscriber keyboard_input_sub = n.subscribe("keyboard_input", 1000, chatterCallback);//added
-  
+  ros::Subscriber keyboard_instructions = n.subscribe("keyboard_instructions", 1000, chatterCallback);
+
   ros::Rate loop_rate(10);
 
   /**
@@ -91,9 +90,15 @@ int main(int argc, char **argv)
   99      * in the constructor above.
  100      */
     
-    labelpull_instructions_pub.publish(msg); //test
-    conveyor_instructions_pub.publish(msg);
-     
+  starwheel1_instructions_pub.publish(msg);
+  starwheel2_instructions_pub.publish(msg);
+  conveyor_instructions_pub.publish(msg);
+  labelprint_instructions_pub.publish(msg);
+  labelapply_instructions_pub.publish(msg);
+  labelpull_instructions_pub.publish(msg); 
+
+
+
     ros::spinOnce();
     loop_rate.sleep();
     ++count;

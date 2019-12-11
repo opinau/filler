@@ -5,16 +5,19 @@
 
 <node pkg="opinau_filler" type= "brain" name = "brain" />
 
-<node pkg="opinau_filler" type= "debug_purpose_listener" name = "debug_purpose_listener" />
+<node pkg="opinau_filler" type= "debug_purpose_listener" name = "starwheel1" />
 
-<node pkg="opinau_filler" type= "debug_purpose_listener" name = "debug_purpose_listener2" />
+<node pkg="opinau_filler" type= "debug_purpose_listener" name = "starwheel2" />
 
-<node pkg="opinau_filler" type= "debug_purpose_listener" name = "debug_purpose_listener3" >
-<param name = "listening_to_topic" type = "string"  value = "conveyor_instructions"/>
-</node>
+<node pkg="opinau_filler" type= "debug_purpose_listener" name = "conveyor" />
 
+<node pkg="opinau_filler" type= "debug_purpose_listener" name = "labelprint" />
 
-<node pkg="opinau_filler" type= "key_input_simple_node" name = "key_input_simple_node" output="screen" launch-prefix="gnome-terminal  -- "/>
+<node pkg="opinau_filler" type= "debug_purpose_listener" name = "labelapply" />
+
+<node pkg="opinau_filler" type= "debug_purpose_listener" name = "labelpull" />
+
+<node pkg="opinau_filler" type= "key_input_simple_node" name = "keyboard" output="screen" launch-prefix="gnome-terminal  -- "/>
 
 </launch>
 
