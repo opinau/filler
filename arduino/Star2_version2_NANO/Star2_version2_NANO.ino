@@ -14,13 +14,8 @@ std_msgs::Float64 test_float;
 const byte stepPin = 2;
 const byte enablePin = 4;
 const byte directionPin = 3; // direction
-
-const byte ledPin = LED_BUILTIN;
-
-int stepdelay = 3;
+double stepdelay = 0.5;
 int mode = 1;
-
-int count = 0;
 
 
 
@@ -46,11 +41,8 @@ void setup() {
   pinMode(enablePin, OUTPUT);
   pinMode(directionPin, OUTPUT);
 
-  pinMode(ledPin, OUTPUT);
-
-
-  digitalWrite(enablePin, LOW); // LOW is on  
-  digitalWrite(directionPin, HIGH); //HIGH is clockwise
+  digitalWrite(directionPin, HIGH); 
+  digitalWrite(enablePin, LOW); //  LOW is ON
 
   nh.getHardware()->setBaud(115200);
   nh.initNode();
@@ -61,11 +53,11 @@ void setup() {
 
 void loop() {
 
-  //nh.spinOnce();
-  //delay(10);
+  nh.spinOnce();
+  delay(10); //was 10
 
   //labeler_revolver_control.publish(&test_float);
-    count++;
+
 
   if (mode == 1)
   {
