@@ -1,4 +1,5 @@
 #include <InkShieldMega.h>
+#include "charset.h"
 #include <ros.h>
 #include <std_msgs/String.h>
 #include <std_msgs/Float64.h>
@@ -23,6 +24,15 @@ void keyboardCallback(const std_msgs::String &command)
     {
         mode = 1;
     }
+        else if (mychar == 'f')
+    {
+        mode = 2;
+    }
+}
+
+void lotStringCallback(const std_msgs::String &lot)
+{
+    spray_lot(lot.data);
 }
 
 ros::Subscriber<std_msgs::String> sub("/keyboard_instructions", &keyboardCallback);
@@ -46,4 +56,29 @@ void loop()
         //(blackout pattern 0x0FFF = 0000111111111111)
         MyInkShield.spray_ink(0x0FFF);
     }
+        else if (mode == 2)
+    {
+        //spray the lot String
+           
+    }
+}
+
+void spray_lot(String lot) {
+    for (int i = 0; i < lot.length(); i++) {
+        spray_letter(lot.charAt(i));
+    }
+}
+
+void spray_letter(int letter)
+{
+  if(letter>=minChar && letter<=maxChar)
+  {
+    //loop through the rows of the letter
+    for(int row=0;row<rowsPerChar;row++){
+      //retrive the row
+      word strip = font[((letter-minChar)*rowsPerChar)+row];
+      //print the row
+      MyInkShield.spray_ink(strip);
+    }
+  }
 }
