@@ -10,6 +10,7 @@ InkShieldA0A3 MyInkShield(2);
 ros::NodeHandle nh;
 
 int mode = 0;
+String lot_test = "DATE: 01/01/2020 LOT: 00001"; // use if no lot string on topic
 
 void keyboardCallback(const std_msgs::String &command)
 {
@@ -53,13 +54,18 @@ void loop()
     if (mode == 1)
     {
         //spray all 12 nozzles as fast as possible
+
         //(blackout pattern 0x0FFF = 0000111111111111)
         MyInkShield.spray_ink(0x0FFF);
     }
         else if (mode == 2)
     {
-        //spray the lot String
-           
+        // spray the lot String
+
+        // read lot string on designated topic 
+        // for each char get equivalent ascii value
+        // int char_ascii_value = char_value
+        // spray each char_ascii_value
     }
 }
 
