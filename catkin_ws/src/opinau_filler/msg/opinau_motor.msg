@@ -1,0 +1,3 @@
+int8 motor_number
+bool motor_on_off
+int8 motor_speed

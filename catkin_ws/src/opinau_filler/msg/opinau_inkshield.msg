@@ -1,0 +1,2 @@
+bool inkshield_on_off
+string inkshield_date_lot

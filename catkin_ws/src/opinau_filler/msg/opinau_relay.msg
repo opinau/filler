@@ -1,0 +1,2 @@
+int8 relay_number
+bool relay_on_off
