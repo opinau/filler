@@ -1,6 +1,6 @@
 {
-    "board": "arduino:avr:nano",
-    "configuration": "cpu=atmega328old",
-    "port": "/dev/ttyUSB0",
-    "sketch": "arduino/big_starwheel1_test_NANO/big_starwheel1_test_NANO.ino"
+    "board": "arduino:avr:mega",
+    "configuration": "cpu=atmega2560",
+    "port": "/dev/ttyACM1",
+    "sketch": "arduino/inkshield_node/inkshield_node.ino"
 }
