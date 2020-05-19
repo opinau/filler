@@ -4,7 +4,7 @@ int delayTime = 100;
 
 void setup() {
   //initialise releyArray as outputs
-  for(int i = 0; i<10; i++)
+  for(int i = 0; i<8; i++)
   {
     pinMode(relayArray[i], OUTPUT);
   }

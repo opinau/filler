@@ -50,3 +50,6 @@ add_executable(key_input_simple_node src/key_input_simple_node.cpp)
 target_link_libraries(key_input_simple_node ${catkin_LIBRARIES})
 #add_dependencies(key_input_simple_node beginner_tutorials_generate_messages_cpp) # erase ?
 
+add_executable(test_omsg_talker src/test_omsg_talker.cpp)
+target_link_libraries(test_omsg_talker ${catkin_LIBRARIES})
+#add_dependencies(key_input_simple_node beginner_tutorials_generate_messages_cpp) # erase ?
