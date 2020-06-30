@@ -1,11 +1,9 @@
 #include "ros.h" //does not affect running
-#include <sstream>
-#include <iostream>
 #include "std_msgs/String.h"
 #include "std_msgs/Bool.h"
 #include "std_msgs/String.h"
 #include "std_msgs/Int8.h"
-#include "/opinau_filler/opinau_relay.h"
+#include <opinau_msgs/opinau_relay.h>
 
 ros::NodeHandle nh;
 ros::Subscriber<opinau_filler::opinau_relay> sub("/relay_instructions", &keyboardCallback);
@@ -19,11 +17,11 @@ void keyboardCallback(const opinau_filler::opinau_relay &command)
 
     if (my_relay_on_off == 1)
     {
-        relayArray[my_relay_number] = HIGH;
+        relayArray[my_relay_number] = LOW;
     }
     else if (my_relay_on_off == 0)
     {
-        relayArray[my_relay_number] = LOW;
+        relayArray[my_relay_number] = HIGH;
     }
 }
 

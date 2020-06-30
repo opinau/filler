@@ -21,7 +21,7 @@ void loop() {
   //turn off from 7-0
   for(int i = 7; i >= 0; i--)
   {
-    digitalWrite(relayArray[i], HIGH);
+    digitalWrite(relayArray[i], LOW);
     delay(delayTime*(i+1));
   }
 }
