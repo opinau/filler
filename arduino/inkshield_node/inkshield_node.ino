@@ -3,16 +3,20 @@
 #include <ros.h>
 #include <std_msgs/String.h>
 #include <std_msgs/Float64.h>
+#include <opinau_filler/opinau_inkshield.h>
+
 
 //initialize shield on pin 2 (valid options are 2-12 or 26-29)
 InkShieldA0A3 MyInkShield(2);
 
 ros::NodeHandle nh;
 
-int mode = 3;                                    //mode of operation of the inkshield
-const int label_sensor = A0;                     // label sensor on pin 8
+bool mode = 0;                                    // mode of operation of the inkshield
+const int label_sensor = A0;                     // label sensor on pin A0
 const int led_test = 11;                         // led indicator for testing on pin 11
 String lot_test = "DATE: 01/01/2020 LOT: 00001"; // use if no lot string on topic
+
+
 
 void keyboardCallback(const std_msgs::String &command)
 {
@@ -27,18 +31,17 @@ void keyboardCallback(const std_msgs::String &command)
     {
         mode = 1;
     }
-    else if (mychar == 'f')
-    {
-        mode = 2;
-    }
 }
 
-void lotStringCallback(const std_msgs::String &lot)
+void lotCallback(opinau_filler::opinau_inkshield &ink_msg)
 {
-    spray_lot(lot.data);
+    mode = ink_msg.inkshield_on_off;
+    lot_test = ink_msg.inkshield_date_lot;
 }
 
 ros::Subscriber<std_msgs::String> sub("/keyboard_instructions", &keyboardCallback);
+ros::Subscriber<opinau_filler::opinau_inkshield> sub_label("/labelprint_instructions", &lotCallback);
+
 
 void setup()
 {
@@ -62,27 +65,26 @@ void loop()
 
         //(blackout pattern 0x0FFF = 0000111111111111)
         MyInkShield.spray_ink(0x0FFF);
-    }
-    else if (mode == 2)
-    {
-        // spray the lot String
-
-        // read lot string on designated topic
-        // for each char get equivalent ascii value
-        // int char_ascii_value = char_value
-        // spray each char_ascii_value
+        digitalWrite(led_test, HIGH);
     }
 
-    else if (mode == 3)
+    else if (mode == 0) // test bool value from ink_msg
     {
-        // read label sensor, if voltage not zero react with LED
+        // read label sensor, if voltage zero react with LED & spray & lot
 
         if (analogRead(label_sensor) == 0)
         {
             digitalWrite(led_test, HIGH);
             delay(1000);
+
+
+            MyInkShield.spray_ink(0x0FFF);
+
+            spray_lot(lot_test);
+
+
             digitalWrite(led_test, LOW);
-            delay(1000);
+            delay(2000);
         }
     }
 }

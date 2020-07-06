@@ -27,7 +27,7 @@ int main(int argc, char **argv)
         msg.relay_number = 0;
         msg.relay_on_off = 0;
 
-        std::cout << "Instruction # " << counter << "; Relay: " << msg.relay_number << "; ON/OFF: " << msg.relay_on_off;
+        std::cout << "\n Instruction # " << counter << "; Relay: " << (int)msg.relay_number << "; ON/OFF: " << (bool)msg.relay_on_off;
 
         relay_instructions_pub.publish(msg);
 

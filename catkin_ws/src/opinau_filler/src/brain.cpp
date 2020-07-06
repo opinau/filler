@@ -3,6 +3,8 @@
 #include "std_msgs/Bool.h"
 
 #include <sstream>
+#include "opinau_filler/opinau_inkshield.h"
+
 
 // Callback function ADDED
 
@@ -57,10 +59,13 @@ int main(int argc, char **argv)
   ros::Publisher starwheel1_instructions_pub = n.advertise<std_msgs::String>("starwheel1_instructions", 1000);
   ros::Publisher starwheel2_instructions_pub = n.advertise<std_msgs::String>("starwheel2_instructions", 1000);
   ros::Publisher conveyor_instructions_pub = n.advertise<std_msgs::String>("conveyor_instructions", 1000);
-  ros::Publisher labelprint_instructions_pub = n.advertise<std_msgs::String>("labelprint_instructions", 1000);
+  
+  ros::Publisher labelprint_instructions_pub = n.advertise<opinau_filler::opinau_inkshield>("labelprint_instructions", 1000);
+  
   ros::Publisher labelapply_instructions_pub = n.advertise<std_msgs::String>("labelapply_instructions", 1000);
   ros::Publisher labelpull_instructions_pub = n.advertise<std_msgs::String>("labelpull_instructions", 1000);  
   
+
   ros::Subscriber keyboard_instructions = n.subscribe("keyboard_instructions", 1000, chatterCallback);
 
   ros::Rate loop_rate(10);
@@ -90,10 +95,16 @@ int main(int argc, char **argv)
   99      * in the constructor above.
  100      */
     
+  opinau_filler::opinau_inkshield ink_msg;
+  ink_msg.inkshield_on_off = 0;
+  ink_msg.inkshield_date_lot = "NEW DATE, NEW DATE, NEW DATE";
+
+
+
   starwheel1_instructions_pub.publish(msg);
   starwheel2_instructions_pub.publish(msg);
   conveyor_instructions_pub.publish(msg);
-  labelprint_instructions_pub.publish(msg);
+  labelprint_instructions_pub.publish(ink_msg);
   labelapply_instructions_pub.publish(msg);
   labelpull_instructions_pub.publish(msg); 
 
