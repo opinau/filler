@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Bottle.qml</file>
+        <file>LabellerStarwheel.qml</file>
+        <file>FillerStarwheel.qml</file>
+        <file>Conveyor.qml</file>
+        <file>assets/starwheel.png</file>
+        <file>assets/small_starwheel.png</file>
+    </qresource>
+</RCC>
