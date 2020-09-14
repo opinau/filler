@@ -32,11 +32,9 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 include_directories(
-# include
   ${catkin_INCLUDE_DIRS}
 )
 
-# set(TS_FILES filler_ui_en_001.ts)
 
 if(ANDROID)
     add_library(filler_ui SHARED
@@ -44,7 +42,6 @@ if(ANDROID)
       RosThread.cpp
       RosThread.h
       qml.qrc
-      #${TS_FILES}
     )
 else()
     add_executable(filler_ui
@@ -52,7 +49,6 @@ else()
       RosThread.cpp
       RosThread.h
       qml.qrc
-      #${TS_FILES}
     )
 endif()
 
@@ -60,8 +56,6 @@ target_compile_definitions(filler_ui
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(filler_ui
   PRIVATE Qt5::Core Qt5::Quick ${catkin_LIBRARIES})
-
-#qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
 
 # ROS CMAKE BELOW
