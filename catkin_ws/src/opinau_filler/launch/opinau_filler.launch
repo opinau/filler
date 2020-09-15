@@ -20,6 +20,9 @@
 <node pkg="opinau_filler" type= "key_input_simple_node" name = "keyboard" output="screen" launch-prefix="gnome-terminal  -- "/>
 
 
+<node pkg="filler_ui" type= "filler_ui" name = "filler_ui" />
+
+
 <!-- <node name = "conveyor_nano" pkg="rosserial_python"    type="serial_node.py">
 <param name = "port" type = "string" value = "/dev/ttyUSB0"/>
 <param name = "baud" type = "int" value = "115200"/>
