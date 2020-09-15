@@ -35,6 +35,12 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+catkin_package(
+#  INCLUDE_DIRS include
+#  LIBRARIES filler_ui
+#  CATKIN_DEPENDS roscpp std_msgs
+#  DEPENDS system_lib
+)
 
 if(ANDROID)
     add_library(filler_ui SHARED
