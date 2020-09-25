@@ -12,47 +12,48 @@
 #include <ros/ros.h>
 #include <ros/network.h>
 
-class RosThread : public QObject {
-	Q_OBJECT
+class RosThread : public QObject
+{
+  Q_OBJECT
 public:
-    RosThread(int argc, char **pArgv, const char * topic  = "/odom");
-    virtual ~RosThread();
+  RosThread(int argc, char **pArgv, const char * topic  = "/odom");
+  virtual ~RosThread();
 
-    double getXPos();
-    double getXSpeed();
-    double getASpeed();
-    double getYPos();
-    double getAPos();
+  double getXPos();
+  double getXSpeed();
+  double getASpeed();
+  double getYPos();
+  double getAPos();
 
-    bool init();
+  bool init();
 
-    //void poseCallback(const nav_msgs::Odometry & msg);
+  //void poseCallback(const nav_msgs::Odometry & msg);
 
-	void SetSpeed(double speed, double angle);
-    void setPose(QList<double> to_set);
+  void SetSpeed(double speed, double angle);
+  void setPose(QList<double> to_set);
 
-    Q_SLOT void run();
+  Q_SLOT void run();
 
-    Q_SIGNAL void newPose(double,double,double);
+  Q_SIGNAL void newPose(double, double, double);
 private:
-    int m_Init_argc;
-    char** m_pInit_argv;
-    const char * m_topic;
+  int m_Init_argc;
+  char** m_pInit_argv;
+  const char * m_topic;
 
-    double m_speed;
-    double m_angle;
+  double m_speed;
+  double m_angle;
 
-    double m_xPos;
-    double m_yPos;
-    double m_aPos;
+  double m_xPos;
+  double m_yPos;
+  double m_aPos;
 
-    double m_maxRange;
-    double m_minRange;
+  double m_maxRange;
+  double m_minRange;
 
-    QThread * m_pThread;
+  QThread * m_pThread;
 
-    ros::Subscriber pose_listener;
-    ros::Publisher  sim_velocity;
+  ros::Subscriber pose_listener;
+  ros::Publisher  sim_velocity;
 };
 #endif
 

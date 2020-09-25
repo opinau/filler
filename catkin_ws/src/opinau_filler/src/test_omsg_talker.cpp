@@ -10,33 +10,33 @@
 int main(int argc, char **argv)
 {
 
-    ros::init(argc, argv, "test_omsg_talker");
+  ros::init(argc, argv, "test_omsg_talker");
 
-    ros::NodeHandle n;
+  ros::NodeHandle n;
 
-    ros::Publisher relay_instructions_pub = n.advertise<opinau_filler::opinau_relay>("relay_instructions", 1000);
+  ros::Publisher relay_instructions_pub = n.advertise<opinau_filler::opinau_relay>("relay_instructions", 1000);
 
-    ros::Rate loop_rate(10);
+  ros::Rate loop_rate(10);
 
-    int counter = 0;
+  int counter = 0;
 
-    while (ros::ok())
-    {
-        opinau_filler::opinau_relay msg;
+  while (ros::ok())
+  {
+    opinau_filler::opinau_relay msg;
 
-        msg.relay_number = 0;
-        msg.relay_on_off = 0;
+    msg.relay_number = 0;
+    msg.relay_on_off = 0;
 
-        std::cout << "\n Instruction # " << counter << "; Relay: " << (int)msg.relay_number << "; ON/OFF: " << (bool)msg.relay_on_off;
+    std::cout << "\n Instruction # " << counter << "; Relay: " << (int)msg.relay_number << "; ON/OFF: " << (bool)msg.relay_on_off;
 
-        relay_instructions_pub.publish(msg);
+    relay_instructions_pub.publish(msg);
 
-        ros::spinOnce();
-        loop_rate.sleep();
-        ++counter;
-    }
+    ros::spinOnce();
+    loop_rate.sleep();
+    ++counter;
+  }
 
-    ros::spin();
+  ros::spin();
 
-    return 0;
+  return 0;
 }

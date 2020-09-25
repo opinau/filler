@@ -8,10 +8,10 @@
 
 // Callback function ADDED
 
-  void chatterCallback(const std_msgs::String::ConstPtr& msg)
- {
-     ROS_INFO("I heard: [%s]", msg->data.c_str());
-   }
+void chatterCallback(const std_msgs::String::ConstPtr& msg)
+{
+  ROS_INFO("I heard: [%s]", msg->data.c_str());
+}
 
 /**
 * This tutorial demonstrates simple sending of messages over the ROS system.
@@ -55,16 +55,16 @@ int main(int argc, char **argv)
   70    * than we can send them, the number here specifies how many messages to
   71    * buffer up before throwing some away.
   72    */
-  
+
   ros::Publisher starwheel1_instructions_pub = n.advertise<std_msgs::String>("starwheel1_instructions", 1000);
   ros::Publisher starwheel2_instructions_pub = n.advertise<std_msgs::String>("starwheel2_instructions", 1000);
   ros::Publisher conveyor_instructions_pub = n.advertise<std_msgs::String>("conveyor_instructions", 1000);
-  
+
   ros::Publisher labelprint_instructions_pub = n.advertise<opinau_filler::opinau_inkshield>("labelprint_instructions", 1000);
-  
+
   ros::Publisher labelapply_instructions_pub = n.advertise<std_msgs::String>("labelapply_instructions", 1000);
-  ros::Publisher labelpull_instructions_pub = n.advertise<std_msgs::String>("labelpull_instructions", 1000);  
-  
+  ros::Publisher labelpull_instructions_pub = n.advertise<std_msgs::String>("labelpull_instructions", 1000);
+
 
   ros::Subscriber keyboard_instructions = n.subscribe("keyboard_instructions", 1000, chatterCallback);
 
@@ -78,8 +78,8 @@ int main(int argc, char **argv)
   while (ros::ok())
   {
     /**
-  85      * This is a message object. You stuff it with data, and then publish it.
-  86      */
+    85      * This is a message object. You stuff it with data, and then publish it.
+    86      */
     std_msgs::String msg;
 
     std::stringstream ss;
@@ -89,24 +89,24 @@ int main(int argc, char **argv)
     ROS_INFO("%s", msg.data.c_str());
 
     /**
-  96      * The publish() function is how you send messages. The parameter
-  97      * is the message object. The type of this object must agree with the type
-  98      * given as a template parameter to the advertise<>() call, as was done
-  99      * in the constructor above.
- 100      */
-    
-  opinau_filler::opinau_inkshield ink_msg;
-  ink_msg.inkshield_on_off = 0;
-  ink_msg.inkshield_date_lot = "NEW DATE, NEW DATE, NEW DATE";
+    96      * The publish() function is how you send messages. The parameter
+    97      * is the message object. The type of this object must agree with the type
+    98      * given as a template parameter to the advertise<>() call, as was done
+    99      * in the constructor above.
+    100      */
+
+    opinau_filler::opinau_inkshield ink_msg;
+    ink_msg.inkshield_on_off = 0;
+    ink_msg.inkshield_date_lot = "NEW DATE, NEW DATE, NEW DATE";
 
 
 
-  starwheel1_instructions_pub.publish(msg);
-  starwheel2_instructions_pub.publish(msg);
-  conveyor_instructions_pub.publish(msg);
-  labelprint_instructions_pub.publish(ink_msg);
-  labelapply_instructions_pub.publish(msg);
-  labelpull_instructions_pub.publish(msg); 
+    starwheel1_instructions_pub.publish(msg);
+    starwheel2_instructions_pub.publish(msg);
+    conveyor_instructions_pub.publish(msg);
+    labelprint_instructions_pub.publish(ink_msg);
+    labelapply_instructions_pub.publish(msg);
+    labelpull_instructions_pub.publish(msg);
 
 
 
@@ -115,7 +115,7 @@ int main(int argc, char **argv)
     ++count;
   }
 
-ros::spin();//added
+  ros::spin();//added
 
   return 0;
 }

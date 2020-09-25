@@ -1,17 +1,17 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
-  
-   /**
-  32  * This tutorial demonstrates simple receipt of messages over the ROS system.
-  33  */
-  void chatterCallback(const std_msgs::String::ConstPtr& msg)
- {
-     ROS_INFO("I heard: [%s]", msg->data.c_str());
-   }
-  
-  int main(int argc, char **argv)
-   {
-     /**
+
+/**
+32  * This tutorial demonstrates simple receipt of messages over the ROS system.
+33  */
+void chatterCallback(const std_msgs::String::ConstPtr& msg)
+{
+  ROS_INFO("I heard: [%s]", msg->data.c_str());
+}
+
+int main(int argc, char **argv)
+{
+  /**
   42    * The ros::init() function needs to see argc and argv so that it can perform
   43    * any ROS arguments and name remapping that were provided at the command line.
   44    * For programmatic remappings you can use a different version of init() which takes
@@ -21,23 +21,23 @@
   48    * You must call one of the versions of ros::init() before using any other
   49    * part of the ROS system.
   50    */
-    ros::init(argc, argv, "debug_purpose_listener"); 
-   
-    /**
+  ros::init(argc, argv, "debug_purpose_listener");
+
+  /**
   54    * NodeHandle is the main access point to communications with the ROS system.
   55    * The first NodeHandle constructed will fully initialize this node, and the last
   56    * NodeHandle destructed will close down the node.
   57    */
-     ros::NodeHandle n;
-     
+  ros::NodeHandle n;
+
 //Use node name to determine the instructions that it subscribes to from the brain
-std::string thisnodename = ros::this_node::getName();
-thisnodename.erase(0,1); // removes the default leading backslash that is output by getName 
-ROS_INFO(" NODE NAME -> %s",thisnodename.c_str());
-thisnodename.append("_instructions");
-ROS_INFO(" %s",thisnodename.c_str());
-   
-   /**
+  std::string thisnodename = ros::this_node::getName();
+  thisnodename.erase(0, 1); // removes the default leading backslash that is output by getName
+  ROS_INFO(" NODE NAME -> %s", thisnodename.c_str());
+  thisnodename.append("_instructions");
+  ROS_INFO(" %s", thisnodename.c_str());
+
+  /**
   61    * The subscribe() call is how you tell ROS that you want to receive messages
   62    * on a given topic.  This invokes a call to the ROS
   63    * master node, which keeps a registry of who is publishing and who
@@ -52,19 +52,19 @@ ROS_INFO(" %s",thisnodename.c_str());
   72    * is the number of messages that will be buffered up before beginning to throw
   73    * away the oldest ones.
   74    */
-    
-  
-       
-ros::Subscriber sub = n.subscribe(thisnodename, 1000, chatterCallback);
 
-  
-  
-     /**
+
+
+  ros::Subscriber sub = n.subscribe(thisnodename, 1000, chatterCallback);
+
+
+
+  /**
   78    * ros::spin() will enter a loop, pumping callbacks.  With this version, all
   79    * callbacks will be called from within this thread (the main one).  ros::spin()
   80    * will exit when Ctrl-C is pressed, or the node is shutdown by the master.
   81    */
-     ros::spin();
-  
-     return 0;
-   }
+  ros::spin();
+
+  return 0;
+}

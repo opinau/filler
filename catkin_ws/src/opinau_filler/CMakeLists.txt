@@ -9,6 +9,7 @@ rospy
 std_msgs 
 genmsg
 message_generation
+roslint
 )
 
 ## Declare ROS messages and services
@@ -18,7 +19,9 @@ add_message_files(
     opinau_inkshield.msg
     opinau_motor.msg
     opinau_relay.msg
-    )
+)
+
+roslint_cpp()
 
 #add_service_files(FILES AddTwoInts.srv)
 

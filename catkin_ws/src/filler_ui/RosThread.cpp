@@ -1,41 +1,41 @@
 #include "RosThread.h"
 
 RosThread::RosThread(int argc, char** pArgv, const char * topic)
-    :	m_Init_argc(argc),
-        m_pInit_argv(pArgv),
-        m_topic(topic)
+  : m_Init_argc(argc),
+    m_pInit_argv(pArgv),
+    m_topic(topic)
 {/** Constructor for the robot thread **/}
 
 RosThread::~RosThread()
 {
-    if (ros::isStarted())
-    {
-        ros::shutdown();
-        ros::waitForShutdown();
-    }//end if
+  if (ros::isStarted())
+  {
+    ros::shutdown();
+    ros::waitForShutdown();
+  }//end if
 
-    m_pThread->wait();
+  m_pThread->wait();
 }//end destructor
 
 bool RosThread::init()
 {
-    m_pThread = new QThread();
-    this->moveToThread(m_pThread);
+  m_pThread = new QThread();
+  this->moveToThread(m_pThread);
 
-    connect(m_pThread, &QThread::started, this, &RosThread::run);
-    ros::init(m_Init_argc, m_pInit_argv, "gui_command");
+  connect(m_pThread, &QThread::started, this, &RosThread::run);
+  ros::init(m_Init_argc, m_pInit_argv, "gui_command");
 
-    if (!ros::master::check())
-        return false;//do not start without ros.
+  if (!ros::master::check())
+    return false;//do not start without ros.
 
-    ros::start();
-    ros::Time::init();
-    ros::NodeHandle nh;
-    //sim_velocity  = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 100);
-    //pose_listener = nh.subscribe(m_topic, 10, &RosThread::poseCallback, this);
+  ros::start();
+  ros::Time::init();
+  ros::NodeHandle nh;
+  //sim_velocity  = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 100);
+  //pose_listener = nh.subscribe(m_topic, 10, &RosThread::poseCallback, this);
 
-    m_pThread->start();
-    return true;
+  m_pThread->start();
+  return true;
 }//set up the thread
 
 //void RosThread::poseCallback(const nav_msgs::Odometry & msg)
@@ -54,40 +54,55 @@ bool RosThread::init()
 
 void RosThread::run()
 {
-    ros::Rate loop_rate(100);
-    QMutex * pMutex;
-    while (ros::ok())
-    {
-        pMutex = new QMutex();
+  ros::Rate loop_rate(100);
+  QMutex * pMutex;
+  while (ros::ok())
+  {
+    pMutex = new QMutex();
 
-        //geometry_msgs::Twist cmd_msg;
-        pMutex->lock();
+    //geometry_msgs::Twist cmd_msg;
+    pMutex->lock();
 //        cmd_msg.linear.x = m_speed;
 //        cmd_msg.angular.z = m_angle;
-        pMutex->unlock();
+    pMutex->unlock();
 
-        //sim_velocity.publish(cmd_msg);
-        ros::spinOnce();
-        loop_rate.sleep();
-        delete pMutex;
-    }//do ros things.
+    //sim_velocity.publish(cmd_msg);
+    ros::spinOnce();
+    loop_rate.sleep();
+    delete pMutex;
+  }//do ros things.
 }
 
 void RosThread::SetSpeed(double speed, double angle)
 {
-    QMutex * pMutex = new QMutex();
-    pMutex->lock();
-    m_speed = speed;
-    m_angle = angle;
-    pMutex->unlock();
+  QMutex * pMutex = new QMutex();
+  pMutex->lock();
+  m_speed = speed;
+  m_angle = angle;
+  pMutex->unlock();
 
-    delete pMutex;
+  delete pMutex;
 }//set the speed of the robot.
 
-double RosThread::getXSpeed(){ return m_speed; }
-double RosThread::getASpeed(){ return m_angle; }
+double RosThread::getXSpeed()
+{
+  return m_speed;
+}
+double RosThread::getASpeed()
+{
+  return m_angle;
+}
 
-double RosThread::getXPos(){ return m_xPos; }
-double RosThread::getYPos(){ return m_yPos; }
-double RosThread::getAPos(){ return m_aPos; }
+double RosThread::getXPos()
+{
+  return m_xPos;
+}
+double RosThread::getYPos()
+{
+  return m_yPos;
+}
+double RosThread::getAPos()
+{
+  return m_aPos;
+}
 
