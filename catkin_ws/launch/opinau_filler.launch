@@ -3,24 +3,24 @@
 
 <launch>
 
-<node pkg="opinau_filler" type= "brain" name = "brain" />
+<node pkg="brain" type= "brain" name = "brain" />
 
-<node pkg="opinau_filler" type= "debug_purpose_listener" name = "starwheel1" />
+<node pkg="brain" type= "debug_purpose_listener" name = "starwheel1" />
 
-<node pkg="opinau_filler" type= "debug_purpose_listener" name = "starwheel2" />
+<node pkg="brain" type= "debug_purpose_listener" name = "starwheel2" />
 
-<node pkg="opinau_filler" type= "debug_purpose_listener" name = "conveyor" />
+<node pkg="brain" type= "debug_purpose_listener" name = "conveyor" />
 
-<node pkg="opinau_filler" type= "debug_purpose_listener" name = "labelprint" />
+<node pkg="brain" type= "debug_purpose_listener" name = "labelprint" />
 
-<node pkg="opinau_filler" type= "debug_purpose_listener" name = "labelapply" />
+<node pkg="brain" type= "debug_purpose_listener" name = "labelapply" />
 
-<node pkg="opinau_filler" type= "debug_purpose_listener" name = "labelpull" />
+<node pkg="brain" type= "debug_purpose_listener" name = "labelpull" />
 
-<node pkg="opinau_filler" type= "key_input_simple_node" name = "keyboard" output="screen" launch-prefix="gnome-terminal  -- "/>
+<node pkg="brain" type= "key_input_simple_node" name = "keyboard" output="screen" launch-prefix="gnome-terminal  -- "/>
 
 
-<node pkg="filler_ui" type= "filler_ui" name = "filler_ui" />
+<node pkg="ui" type= "ui" name = "ui" />
 
 
 <!-- <node name = "conveyor_nano" pkg="rosserial_python"    type="serial_node.py">
