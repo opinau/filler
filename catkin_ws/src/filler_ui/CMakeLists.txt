@@ -29,11 +29,14 @@ find_package(Qt5 COMPONENTS Core Quick LinguistTools REQUIRED)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
+  roslint
 )
 
 include_directories(
   ${catkin_INCLUDE_DIRS}
 )
+
+roslint_cpp()
 
 catkin_package(
 #  INCLUDE_DIRS include
