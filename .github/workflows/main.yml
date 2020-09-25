@@ -1,0 +1,5 @@
+- name: Setup ROS environment
+  # You may pin to the exact commit or the version.
+  # uses: ros-tooling/setup-ros@99919f73f797ab4dbdc23f2b9a68e85cafabb1c9
+  uses: ros-tooling/setup-ros@0.0.25
+  with: - noetic
