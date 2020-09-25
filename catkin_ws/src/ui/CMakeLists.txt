@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(filler_ui LANGUAGES CXX)
+project(ui LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -40,20 +40,20 @@ roslint_cpp()
 
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES filler_ui
+#  LIBRARIES ui
 #  CATKIN_DEPENDS roscpp std_msgs
 #  DEPENDS system_lib
 )
 
 if(ANDROID)
-    add_library(filler_ui SHARED
+    add_library(ui SHARED
       main.cpp
       RosThread.cpp
       RosThread.h
       qml.qrc
     )
 else()
-    add_executable(filler_ui
+    add_executable(ui
       main.cpp
       RosThread.cpp
       RosThread.h
@@ -61,15 +61,15 @@ else()
     )
 endif()
 
-target_compile_definitions(filler_ui
+target_compile_definitions(ui
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_link_libraries(filler_ui
+target_link_libraries(ui
   PRIVATE Qt5::Core Qt5::Quick ${catkin_LIBRARIES})
 
 
 # ROS CMAKE BELOW
 #cmake_minimum_required(VERSION 3.0.2)
-#project(filler_ui)
+#project(ui)
 
 ### Compile as C++11, supported in ROS Kinetic and newer
 ## add_compile_options(-std=c++11)
@@ -173,7 +173,7 @@ target_link_libraries(filler_ui
 ### DEPENDS: system dependencies of this project that dependent projects also need
 #catkin_package(
 ##  INCLUDE_DIRS include
-##  LIBRARIES filler_ui
+##  LIBRARIES ui
 ##  CATKIN_DEPENDS roscpp std_msgs
 ##  DEPENDS system_lib
 #)
@@ -191,7 +191,7 @@ target_link_libraries(filler_ui
 
 ### Declare a C++ library
 ## add_library(${PROJECT_NAME}
-##   src/${PROJECT_NAME}/filler_ui.cpp
+##   src/${PROJECT_NAME}/ui.cpp
 ## )
 
 ### Add cmake target dependencies of the library
@@ -202,7 +202,7 @@ target_link_libraries(filler_ui
 ### Declare a C++ executable
 ### With catkin_make all packages are built within a single CMake context
 ### The recommended prefix ensures that target names across packages don't collide
-## add_executable(${PROJECT_NAME}_node src/filler_ui_node.cpp)
+## add_executable(${PROJECT_NAME}_node src/ui_node.cpp)
 
 ### Rename C++ executable without prefix
 ### The above recommended prefix causes long target names, the following renames the
@@ -266,7 +266,7 @@ target_link_libraries(filler_ui
 ##############
 
 ### Add gtest based cpp test target and link libraries
-## catkin_add_gtest(${PROJECT_NAME}-test test/test_filler_ui.cpp)
+## catkin_add_gtest(${PROJECT_NAME}-test test/test_ui.cpp)
 ## if(TARGET ${PROJECT_NAME}-test)
 ##   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 ## endif()

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(opinau_filler)
+project(brain)
 
 ## Find catkin and any catkin packages
 ## Opinau messages need message_generation and std_msgs

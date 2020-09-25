@@ -1,7 +1,6 @@
 import QtQuick 2.10
 import QtGraphicalEffects 1.12
 
-
 Item {
     Image {
         id: image
