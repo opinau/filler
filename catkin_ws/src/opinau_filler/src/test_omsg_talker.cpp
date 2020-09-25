@@ -1,4 +1,4 @@
-#include "ros/ros.h" //does not affect running
+#include "ros/ros.h"  //does not affect running
 #include <sstream>
 #include <iostream>
 #include "std_msgs/String.h"
@@ -7,9 +7,8 @@
 #include "std_msgs/Int8.h"
 #include "opinau_filler/opinau_relay.h"
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
-
   ros::init(argc, argv, "test_omsg_talker");
 
   ros::NodeHandle n;
@@ -27,7 +26,8 @@ int main(int argc, char **argv)
     msg.relay_number = 0;
     msg.relay_on_off = 0;
 
-    std::cout << "\n Instruction # " << counter << "; Relay: " << (int)msg.relay_number << "; ON/OFF: " << (bool)msg.relay_on_off;
+    std::cout << "\n Instruction # " << counter << "; Relay: " << (int)msg.relay_number
+              << "; ON/OFF: " << (bool)msg.relay_on_off;
 
     relay_instructions_pub.publish(msg);
 

@@ -1,10 +1,9 @@
-#include "ros/ros.h"        //does not affect running
+#include "ros/ros.h"  //does not affect running
 #include "std_msgs/String.h"
 #include "std_msgs/Bool.h"
 
 #include <sstream>
 #include "opinau_filler/opinau_inkshield.h"
-
 
 // Callback function ADDED
 
@@ -14,9 +13,9 @@ void chatterCallback(const std_msgs::String::ConstPtr& msg)
 }
 
 /**
-* This tutorial demonstrates simple sending of messages over the ROS system.
-*/
-int main(int argc, char **argv)
+ * This tutorial demonstrates simple sending of messages over the ROS system.
+ */
+int main(int argc, char** argv)
 {
   /**
     * The ros::init() function needs to see argc and argv so that it can perform
@@ -60,11 +59,11 @@ int main(int argc, char **argv)
   ros::Publisher starwheel2_instructions_pub = n.advertise<std_msgs::String>("starwheel2_instructions", 1000);
   ros::Publisher conveyor_instructions_pub = n.advertise<std_msgs::String>("conveyor_instructions", 1000);
 
-  ros::Publisher labelprint_instructions_pub = n.advertise<opinau_filler::opinau_inkshield>("labelprint_instructions", 1000);
+  ros::Publisher labelprint_instructions_pub =
+      n.advertise<opinau_filler::opinau_inkshield>("labelprint_instructions", 1000);
 
   ros::Publisher labelapply_instructions_pub = n.advertise<std_msgs::String>("labelapply_instructions", 1000);
   ros::Publisher labelpull_instructions_pub = n.advertise<std_msgs::String>("labelpull_instructions", 1000);
-
 
   ros::Subscriber keyboard_instructions = n.subscribe("keyboard_instructions", 1000, chatterCallback);
 
@@ -99,8 +98,6 @@ int main(int argc, char **argv)
     ink_msg.inkshield_on_off = 0;
     ink_msg.inkshield_date_lot = "NEW DATE, NEW DATE, NEW DATE";
 
-
-
     starwheel1_instructions_pub.publish(msg);
     starwheel2_instructions_pub.publish(msg);
     conveyor_instructions_pub.publish(msg);
@@ -108,14 +105,12 @@ int main(int argc, char **argv)
     labelapply_instructions_pub.publish(msg);
     labelpull_instructions_pub.publish(msg);
 
-
-
     ros::spinOnce();
     loop_rate.sleep();
     ++count;
   }
 
-  ros::spin();//added
+  ros::spin();  // added
 
   return 0;
 }

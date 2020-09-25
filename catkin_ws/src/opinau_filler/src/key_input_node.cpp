@@ -16,12 +16,12 @@ char getch()
   FD_ZERO(&set);
   FD_SET(filedesc, &set);
 
-  timeout.tv_sec = 8; //time to wait for input (default 0)
+  timeout.tv_sec = 8;  // time to wait for input (default 0)
   timeout.tv_usec = 1000;
 
   rv = select(filedesc + 1, &set, NULL, NULL, &timeout);
 
-  struct termios old = {0};
+  struct termios old = { 0 };
   if (tcgetattr(filedesc, &old) < 0)
     ROS_ERROR("tcsetattr()");
   old.c_lflag &= ~ICANON;
@@ -45,8 +45,7 @@ char getch()
   return (buff);
 }
 
-
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
   ros::init(argc, argv, "key_input_node");
   ros::NodeHandle n;

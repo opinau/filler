@@ -9,7 +9,7 @@ void chatterCallback(const std_msgs::String::ConstPtr& msg)
   ROS_INFO("I heard: [%s]", msg->data.c_str());
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
   /**
   42    * The ros::init() function needs to see argc and argv so that it can perform
@@ -30,9 +30,9 @@ int main(int argc, char **argv)
   57    */
   ros::NodeHandle n;
 
-//Use node name to determine the instructions that it subscribes to from the brain
+  // Use node name to determine the instructions that it subscribes to from the brain
   std::string thisnodename = ros::this_node::getName();
-  thisnodename.erase(0, 1); // removes the default leading backslash that is output by getName
+  thisnodename.erase(0, 1);  // removes the default leading backslash that is output by getName
   ROS_INFO(" NODE NAME -> %s", thisnodename.c_str());
   thisnodename.append("_instructions");
   ROS_INFO(" %s", thisnodename.c_str());
@@ -53,11 +53,7 @@ int main(int argc, char **argv)
   73    * away the oldest ones.
   74    */
 
-
-
   ros::Subscriber sub = n.subscribe(thisnodename, 1000, chatterCallback);
-
-
 
   /**
   78    * ros::spin() will enter a loop, pumping callbacks.  With this version, all

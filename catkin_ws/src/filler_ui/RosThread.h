@@ -16,7 +16,7 @@ class RosThread : public QObject
 {
   Q_OBJECT
 public:
-  RosThread(int argc, char **pArgv, const char * topic  = "/odom");
+  RosThread(int argc, char** pArgv, const char* topic = "/odom");
   virtual ~RosThread();
 
   double getXPos();
@@ -27,7 +27,7 @@ public:
 
   bool init();
 
-  //void poseCallback(const nav_msgs::Odometry & msg);
+  // void poseCallback(const nav_msgs::Odometry & msg);
 
   void SetSpeed(double speed, double angle);
   void setPose(QList<double> to_set);
@@ -35,10 +35,11 @@ public:
   Q_SLOT void run();
 
   Q_SIGNAL void newPose(double, double, double);
+
 private:
   int m_Init_argc;
   char** m_pInit_argv;
-  const char * m_topic;
+  const char* m_topic;
 
   double m_speed;
   double m_angle;
@@ -50,10 +51,9 @@ private:
   double m_maxRange;
   double m_minRange;
 
-  QThread * m_pThread;
+  QThread* m_pThread;
 
   ros::Subscriber pose_listener;
-  ros::Publisher  sim_velocity;
+  ros::Publisher sim_velocity;
 };
 #endif
-
