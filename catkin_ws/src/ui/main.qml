@@ -2,6 +2,8 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 
 Window {
+    id: mainWindow
+
     visible: true
     width: 640
     height: 480
@@ -63,4 +65,12 @@ Window {
         height: 300
         width: 300
     }
+
+    Shortcut {
+            sequence: "1"
+            onActivated: {
+                ros.test()
+            }
+   }
+
 }

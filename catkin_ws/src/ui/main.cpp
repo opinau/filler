@@ -1,5 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <RosThread.h>
 
 int main(int argc, char* argv[])
@@ -20,7 +21,10 @@ int main(int argc, char* argv[])
           QCoreApplication::exit(-1);
       },
       Qt::QueuedConnection);
+
   engine.load(url);
+
+  engine.rootContext()->setContextProperty("ros", &ros);
 
   return app.exec();
 }

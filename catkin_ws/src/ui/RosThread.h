@@ -32,9 +32,13 @@ public:
   void SetSpeed(double speed, double angle);
   void setPose(QList<double> to_set);
 
-  Q_SLOT void run();
 
-  Q_SIGNAL void newPose(double, double, double);
+  public slots:
+    void run();
+    void test();
+
+  signals:
+    void newPose(double, double, double);
 
 private:
   int m_Init_argc;
@@ -54,6 +58,6 @@ private:
   QThread* m_pThread;
 
   ros::Subscriber pose_listener;
-  ros::Publisher sim_velocity;
+  ros::Publisher pub;
 };
 #endif
