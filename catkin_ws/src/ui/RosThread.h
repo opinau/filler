@@ -39,6 +39,7 @@ public:
 
   signals:
     void newPose(double, double, double);
+    void testSignal();
 
 private:
   int m_Init_argc;

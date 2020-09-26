@@ -10,6 +10,10 @@ Window {
     title: qsTr("Hello World")
     color: "green"
 
+    function testSlot() {
+        console.log("in qml slot")
+    }
+
     Text {
         id: name
         color: "white"
