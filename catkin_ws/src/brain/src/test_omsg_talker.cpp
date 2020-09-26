@@ -5,7 +5,7 @@
 #include "std_msgs/Bool.h"
 #include "std_msgs/String.h"
 #include "std_msgs/Int8.h"
-#include "brain/opinau_relay.h"
+#include "messages/opinau_relay.h"
 
 int main(int argc, char** argv)
 {
@@ -13,7 +13,7 @@ int main(int argc, char** argv)
 
   ros::NodeHandle n;
 
-  ros::Publisher relay_instructions_pub = n.advertise<brain::opinau_relay>("relay_instructions", 1000);
+  ros::Publisher relay_instructions_pub = n.advertise<messages::opinau_relay>("relay_instructions", 1000);
 
   ros::Rate loop_rate(10);
 
@@ -21,7 +21,7 @@ int main(int argc, char** argv)
 
   while (ros::ok())
   {
-    brain::opinau_relay msg;
+    messages::opinau_relay msg;
 
     msg.relay_number = 0;
     msg.relay_on_off = 0;
