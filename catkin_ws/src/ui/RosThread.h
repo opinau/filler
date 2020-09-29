@@ -29,13 +29,13 @@ public:
 
   // void poseCallback(const nav_msgs::Odometry & msg);
 
-  void SetSpeed(double speed, double angle);
   void setPose(QList<double> to_set);
 
 
   public slots:
     void run();
     void test();
+    void messageLabellerMotor(int, bool, int);
 
   signals:
     void newPose(double, double, double);
@@ -59,6 +59,6 @@ private:
   QThread* m_pThread;
 
   ros::Subscriber pose_listener;
-  ros::Publisher pub;
+  ros::Publisher m_pubLabellerMotors;
 };
 #endif

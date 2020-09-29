@@ -10,7 +10,9 @@ int main(int argc, char* argv[])
   QGuiApplication app(argc, argv);
 
   RosThread ros(argc, argv);
-  ros.init();
+  if (!ros.init()) {
+      qDebug() << "roscore not running!";
+  }
 
   QQmlApplicationEngine engine;
   const QUrl url(QStringLiteral("qrc:/main.qml"));

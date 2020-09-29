@@ -1,5 +1,6 @@
 #include "RosThread.h"
 #include "std_msgs/String.h"
+#include "opinau_msg/motor.h"
 
 RosThread::RosThread(int argc, char** pArgv, const char* topic) : m_Init_argc(argc), m_pInit_argv(pArgv), m_topic(topic)
 { /** Constructor for the robot thread **/
@@ -7,37 +8,34 @@ RosThread::RosThread(int argc, char** pArgv, const char* topic) : m_Init_argc(ar
 
 RosThread::~RosThread()
 {
-  if (ros::isStarted())
-  {
-    ros::shutdown();
-    ros::waitForShutdown();
-  }  // end if
+    if (ros::isStarted())
+    {
+        ros::shutdown();
+        ros::waitForShutdown();
+    }
 
-  m_pThread->wait();
-}  // end destructor
+    m_pThread->wait();
+}
 
 bool RosThread::init()
 {
-  m_pThread = new QThread();
-  this->moveToThread(m_pThread);
+    m_pThread = new QThread();
+    this->moveToThread(m_pThread);
 
-  connect(m_pThread, &QThread::started, this, &RosThread::run);
-  ros::init(m_Init_argc, m_pInit_argv, "ui");
+    connect(m_pThread, &QThread::started, this, &RosThread::run);
+    ros::init(m_Init_argc, m_pInit_argv, "ui");
 
-  if (!ros::master::check())
-    return false;  // do not start without ros.
+    if (!ros::master::check())
+        return false;  // do not start without ros.
 
-  ros::start();
-  ros::Time::init();
-  ros::NodeHandle nh;
+    ros::start();
+    ros::Time::init();
+    ros::NodeHandle nh;
 
-  pub = nh.advertise<std_msgs::String>("topic_name", 5);
-  std_msgs::String str;
-  str.data = "hello world";
-  pub.publish(str);
+    m_pubLabellerMotors = nh.advertise<opinau_msg::motor>("labeller_motors", 5);
+    m_pThread->start();
 
-  m_pThread->start();
-  return true;
+    return true;
 }
 
 // void RosThread::poseCallback(const nav_msgs::Odometry & msg)
@@ -56,12 +54,12 @@ bool RosThread::init()
 
 void RosThread::run()
 {
-  ros::Rate loop_rate(100);
-  while (ros::ok())
-  {
-    ros::spinOnce();
-    loop_rate.sleep();
-  }
+    ros::Rate loop_rate(100);
+    while (ros::ok())
+    {
+        ros::spinOnce();
+        loop_rate.sleep();
+    }
 }
 
 void RosThread::test()
@@ -69,35 +67,43 @@ void RosThread::test()
     qDebug() << "in slot";
 }
 
-void RosThread::SetSpeed(double speed, double angle)
+void RosThread::messageLabellerMotor(int index, bool enabled, int speed)
 {
-  QMutex* pMutex = new QMutex();
-  pMutex->lock();
-  m_speed = speed;
-  m_angle = angle;
-  pMutex->unlock();
+    qDebug() << "messaging motor" << index << enabled << speed;
+    // Do we need this mutex
+    QMutex* pMutex = new QMutex();
+    pMutex->lock();
 
-  delete pMutex;
-}  // set the speed of the robot.
+    opinau_msg::motor motorMessage;
+    motorMessage.index = index;
+    motorMessage.enabled = enabled;
+    motorMessage.speed = speed;
+
+    m_pubLabellerMotors.publish(motorMessage);
+
+    pMutex->unlock();
+
+    delete pMutex;
+}
 
 double RosThread::getXSpeed()
 {
-  return m_speed;
+    return m_speed;
 }
 double RosThread::getASpeed()
 {
-  return m_angle;
+    return m_angle;
 }
 
 double RosThread::getXPos()
 {
-  return m_xPos;
+    return m_xPos;
 }
 double RosThread::getYPos()
 {
-  return m_yPos;
+    return m_yPos;
 }
 double RosThread::getAPos()
 {
-  return m_aPos;
+    return m_aPos;
 }

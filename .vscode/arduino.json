@@ -1,6 +1,6 @@
 {
-    "board": "arduino:avr:mega",
-    "configuration": "cpu=atmega2560",
-    "port": "/dev/ttyACM1",
-    "sketch": "arduino/inkshield_node/inkshield_node.ino"
+    "board": "arduino:avr:nano",
+    "configuration": "cpu=atmega328",
+    "port": "/dev/ttyUSB0",
+    "sketch": "arduino/labeller_controller/labeller_controller.ino"
 }

@@ -6,7 +6,7 @@ Window {
 
     visible: true
     width: 640
-    height: 480
+    height: 640
     title: qsTr("Hello World")
     color: "green"
 
@@ -70,11 +70,18 @@ Window {
         width: 300
     }
 
+    JogConsole {
+        x: 0
+        y: 500
+        height: 300
+        width: 300
+    }
+
     Shortcut {
-            sequence: "1"
-            onActivated: {
-                ros.test()
-            }
-   }
+        sequence: "1"
+        onActivated: {
+            ros.test()
+        }
+    }
 
 }

@@ -7,5 +7,7 @@
         <file>Conveyor.qml</file>
         <file>assets/starwheel.png</file>
         <file>assets/small_starwheel.png</file>
+        <file>JogConsole.qml</file>
+        <file>MotorJog.qml</file>
     </qresource>
 </RCC>
