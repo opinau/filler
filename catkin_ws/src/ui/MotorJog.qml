@@ -9,6 +9,9 @@ Item {
         ros.messageLabellerMotor(index, enabledSwitch.checked, speedSlider.value)
     }
 
+    height: 100
+    width: 100
+
     ColumnLayout {
         Switch {
             id: enabledSwitch

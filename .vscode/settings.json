@@ -57,7 +57,10 @@
         "random": "cpp",
         "set": "cpp",
         "string": "cpp",
-        "string_view": "cpp"
+        "string_view": "cpp",
+        "core": "cpp",
+        "geometry": "cpp",
+        "lu": "cpp"
     },
     "cmake.configureOnOpen": false
 }

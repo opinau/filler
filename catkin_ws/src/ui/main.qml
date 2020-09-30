@@ -72,7 +72,7 @@ Window {
 
     JogConsole {
         x: 0
-        y: 500
+        y: 400
         height: 300
         width: 300
     }

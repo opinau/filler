@@ -2,47 +2,93 @@
 #include <opinau_msgs/motor.h>
 
 const int STEPS_PER_REVOLUTION = 200;
-const byte STEP_PIN = 2;
-const byte DIRECTION_PIN = 3;
-const byte ENABLE_PIN = 4;
-//const int proximityPin = 5;
+const int TOP_SPEED_DELAY = 3;
+const int TOP_SPEED = 128;
 
-int stepdelay = 3; //rotation speed of starwheel
-int stepnumber = 0;
-int timetolabel = 1000; //delay time needed to apply label
+struct Motor {
+  byte step_pin;
+  byte direction_pin;
+  byte enable_pin;
 
-bool running = false;
-bool enabled = false;
+  int step_delay;
+  bool running;
+  bool enabled;
+  bool forwards;
+};
+
+Motor motor_0 = {2, 3, 4, TOP_SPEED_DELAY, false, false, true};
+Motor motor_1 = {5, 6, 7, TOP_SPEED_DELAY, false, false, true};
 
 ros::NodeHandle nh;
 
-void motor_message_cb(const opinau_msgs::motor &msg)
-{ 
-  digitalWrite(LED_BUILTIN, HIGH);
-
-  if (msg.enabled != enabled) {
-    if (msg.enabled) {
-      digitalWrite(ENABLE_PIN, LOW);
+void adjust_motor_parameters(const opinau_msgs::motor &msg, Motor *motor)
+{
+  if (msg.enabled != motor->enabled)
+  {
+    if (msg.enabled)
+    {
+      digitalWrite(motor->enable_pin, LOW);
     }
-    else {
-      digitalWrite(ENABLE_PIN, HIGH);
+    else
+    {
+      digitalWrite(motor->enable_pin, HIGH);
     }
-    enabled = msg.enabled;
+    motor->enabled = msg.enabled;
   }
 
+  if (msg.speed < 0 && motor->forwards)
+  {
+    digitalWrite(motor->direction_pin, HIGH);
+    motor->forwards = false;
+  }
+  else if (msg.speed > 0 && !motor->forwards)
+  {
+    digitalWrite(motor->direction_pin, LOW);
+    motor->forwards = true;
+  }
 
-  //int spin = period / (STEPS_PER_REVOLUTION * msg.data.speed);
-  //currentMillis = millis();
-  //   if(stepper_motor.data)
-  //   {
-  //     if (currentMillis - startMillis >= period){
-  //       myStepper.step(1);
-  //       startMillis = currentMillis;
-  //     }
-  // }
+  if (msg.speed == 0)
+  {
+    motor->running = false;
+  }
+  else
+  {
+    motor->running = true;
+    motor->step_delay = TOP_SPEED / abs(msg.speed) * TOP_SPEED_DELAY;
+  }
+}
+
+void motor_message_cb(const opinau_msgs::motor &msg)
+{
+  if (msg.index == 0)
+  {
+    adjust_motor_parameters(msg, &motor_0);
+  }
+  else {
+    adjust_motor_parameters(msg, &motor_1);
+  }
 }
 
 ros::Subscriber<opinau_msgs::motor> motor_sub("labeller_motors", &motor_message_cb);
+
+void run_motor(Motor motor) {
+  if (motor.running)
+  {
+    digitalWrite(motor.step_pin, HIGH);
+    delay(motor.step_delay);
+    nh.spinOnce();
+    digitalWrite(motor.step_pin, LOW);
+  }
+}
+
+void setup_motor(Motor motor) {
+  pinMode(motor.step_pin, OUTPUT);
+  pinMode(motor.enable_pin, OUTPUT);
+  pinMode(motor.direction_pin, OUTPUT);
+
+  digitalWrite(motor.direction_pin, LOW);
+  digitalWrite(motor.enable_pin, HIGH); // HIGH is enabled on for DM332T, LOW is on for HY & DM860T driver
+}
 
 void setup()
 {
@@ -51,20 +97,14 @@ void setup()
 
   nh.subscribe(motor_sub);
 
-  pinMode(STEP_PIN, OUTPUT);
-  pinMode(ENABLE_PIN, OUTPUT);
-  pinMode(DIRECTION_PIN, OUTPUT);
-  pinMode(LED_BUILTIN, OUTPUT);
-  //pinMode(proximityPin, INPUT);
-
-  digitalWrite(DIRECTION_PIN, HIGH);
-  digitalWrite(LED_BUILTIN, LOW);
-
-  digitalWrite(ENABLE_PIN, HIGH); // HIGH is enabled on for DM332T, LOW is on for HY & DM860T driver
+  setup_motor(motor_0);
+  setup_motor(motor_1);
 }
 
 void loop()
 {
   nh.spinOnce();
-  delay(stepdelay);
+
+  run_motor(motor_0);
+  run_motor(motor_1);
 }

@@ -5,11 +5,14 @@ Item {
     RowLayout {
         id: layout
         anchors.fill: parent
-        spacing: 6
+        spacing: 250
 
         MotorJog {
             index: 0
         }
 
+        MotorJog {
+            index: 1
+        }
     }
 }
