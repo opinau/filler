@@ -19,8 +19,8 @@ Item {
         }
         Slider {
             id: speedSlider
-            from: -127
-            to: 128
+            from: -128
+            to: 127
             stepSize: 1
 
             onValueChanged: {
