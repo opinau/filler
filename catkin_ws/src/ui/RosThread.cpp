@@ -1,6 +1,6 @@
 #include "RosThread.h"
 #include "std_msgs/String.h"
-#include "opinau_msg/motor.h"
+#include "opinau_msgs/motor.h"
 
 RosThread::RosThread(int argc, char** pArgv, const char* topic) : m_Init_argc(argc), m_pInit_argv(pArgv), m_topic(topic)
 { /** Constructor for the robot thread **/
@@ -32,7 +32,7 @@ bool RosThread::init()
     ros::Time::init();
     ros::NodeHandle nh;
 
-    m_pubLabellerMotors = nh.advertise<opinau_msg::motor>("labeller_motors", 5);
+    m_pubLabellerMotors = nh.advertise<opinau_msgs::motor>("labeller_motors", 5);
     m_pThread->start();
 
     return true;
@@ -74,7 +74,7 @@ void RosThread::messageLabellerMotor(int index, bool enabled, int speed)
     QMutex* pMutex = new QMutex();
     pMutex->lock();
 
-    opinau_msg::motor motorMessage;
+    opinau_msgs::motor motorMessage;
     motorMessage.index = index;
     motorMessage.enabled = enabled;
     motorMessage.speed = speed;
