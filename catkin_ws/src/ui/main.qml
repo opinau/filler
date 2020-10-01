@@ -8,16 +8,30 @@ Window {
     width: 640
     height: 640
     title: qsTr("Hello World")
-    color: "green"
+    color: "black"
 
-    function testSlot() {
+    function inkStatusSlot() {
         console.log("in qml slot")
+        labelSensor.labelPresent = labelPresent
     }
+
+//    Connections {
+//        target: ros
+//        onInkStatusChanged: {
+//            labelSensor.labelPresent = labelPresent
+//        }
+//    }
 
     Text {
         id: name
         color: "white"
         text: "Bottle x: " + testBottle.x + " y: " + testBottle.y
+    }
+
+    LabelSensor {
+        id: labelSensor
+        height: 20
+        width: 20
     }
 
     Conveyor {

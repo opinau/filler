@@ -38,19 +38,19 @@ bool RosThread::init()
     return true;
 }
 
-// void RosThread::poseCallback(const nav_msgs::Odometry & msg)
-//{
-//    QMutex * pMutex = new QMutex();
+ void RosThread::inkStatusCallback(const opinau_msgs::ink_status &msg)
+{
+    qDebug() << "ink status changed";
+    QMutex * pMutex = new QMutex();
 
-//    pMutex->lock();
-//    m_xPos = msg.pose.pose.position.x;
-//    m_yPos = msg.pose.pose.position.y;
-//    m_aPos = msg.pose.pose.orientation.w;
-//    pMutex->unlock();
+    pMutex->lock();
 
-//    delete pMutex;
-//    Q_EMIT newPose(m_xPos, m_yPos, m_aPos);
-//}//callback method to update the robot's position.
+    emit inkStatusChanged(msg.label_present);
+
+    pMutex->unlock();
+
+    delete pMutex;
+}
 
 void RosThread::run()
 {
@@ -70,7 +70,7 @@ void RosThread::test()
 void RosThread::messageLabellerMotor(int index, bool enabled, int speed)
 {
     qDebug() << "messaging motor" << index << enabled << speed;
-    // Do we need this mutex
+    // Do we need this lock
     QMutex* pMutex = new QMutex();
     pMutex->lock();
 

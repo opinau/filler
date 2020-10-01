@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
   engine.rootContext()->setContextProperty("ros", &ros);
 
   QObject* mainWindow = engine.rootObjects().at(0);
-  QObject::connect(&ros, SIGNAL(testSignal()), mainWindow, SLOT(testSlot()));
+  QObject::connect(&ros, SIGNAL(inkStatusChanged(bool)), mainWindow, SLOT(inkStatusSlot()));
 
   return app.exec();
 }

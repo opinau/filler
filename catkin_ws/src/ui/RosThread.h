@@ -12,6 +12,8 @@
 #include <ros/ros.h>
 #include <ros/network.h>
 
+#include "opinau_msgs/ink_status.h"
+
 class RosThread : public QObject
 {
   Q_OBJECT
@@ -27,7 +29,7 @@ public:
 
   bool init();
 
-  // void poseCallback(const nav_msgs::Odometry & msg);
+  void inkStatusCallback(const opinau_msgs::ink_status&);
 
   void setPose(QList<double> to_set);
 
@@ -39,7 +41,7 @@ public:
 
   signals:
     void newPose(double, double, double);
-    void testSignal();
+    void inkStatusChanged(bool labelPresent);
 
 private:
   int m_Init_argc;

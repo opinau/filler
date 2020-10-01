@@ -9,5 +9,6 @@
         <file>assets/small_starwheel.png</file>
         <file>JogConsole.qml</file>
         <file>MotorJog.qml</file>
+        <file>LabelSensor.qml</file>
     </qresource>
 </RCC>
