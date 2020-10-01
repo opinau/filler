@@ -1,2 +1,2 @@
-bool inkshield_on_off
-string inkshield_date_lot
+bool enabled
+string bbd_lot
