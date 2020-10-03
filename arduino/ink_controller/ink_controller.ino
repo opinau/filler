@@ -18,6 +18,7 @@ bool printing = false;
 const int label_sensor = A0;                    // label sensor on pin A0
 const int led_test = 11;                        // led indicator for testing on pin 11
 String bbd_lot = "DATE: 01/01/2020 LOT: 00001"; // use if no lot string on topic
+int print_delay = 1000;
 
 opinau_msgs::ink_status status;
 
@@ -25,6 +26,7 @@ void ink_message_cb(const opinau_msgs::ink &msg)
 {
     enabled = msg.enabled;
     bbd_lot = msg.bbd_lot;
+    print_delay = msg.print_delay;
 }
 
 ros::Subscriber<opinau_msgs::ink> ink_sub("/labeller_ink", &ink_message_cb);
@@ -55,7 +57,7 @@ void loop()
         if (enabled)
         {
             printing = true;
-            delay(1000);
+            delay(print_delay);
             digitalWrite(led_test, HIGH);
 
             spray_lot(bbd_lot);
