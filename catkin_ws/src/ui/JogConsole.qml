@@ -14,5 +14,13 @@ Item {
         MotorJog {
             index: 1
         }
+
+        MotorJog {
+            index: 2
+        }
+
+        InkControl {
+
+        }
     }
 }

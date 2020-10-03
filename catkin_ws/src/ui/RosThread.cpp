@@ -1,6 +1,7 @@
 #include "RosThread.h"
 #include "std_msgs/String.h"
 #include "opinau_msgs/motor.h"
+#include "opinau_msgs/ink.h"
 
 RosThread::RosThread(int argc, char** pArgv, const char* topic) : m_Init_argc(argc), m_pInit_argv(pArgv), m_topic(topic)
 { /** Constructor for the robot thread **/
@@ -33,6 +34,9 @@ bool RosThread::init()
     ros::NodeHandle nh;
 
     m_pubLabellerMotors = nh.advertise<opinau_msgs::motor>("labeller_motors", 5);
+    m_pubInk = nh.advertise<opinau_msgs::motor>("ink", 5);
+
+    m_subInkStatus = nh.subscribe("ink_status", 1, &RosThread::inkStatusCallback, this);
     m_pThread->start();
 
     return true;
@@ -40,7 +44,7 @@ bool RosThread::init()
 
  void RosThread::inkStatusCallback(const opinau_msgs::ink_status &msg)
 {
-    qDebug() << "ink status changed";
+    //qDebug() << "ink status changed";
     QMutex * pMutex = new QMutex();
 
     pMutex->lock();
@@ -80,6 +84,23 @@ void RosThread::messageLabellerMotor(int index, bool enabled, int speed)
     motorMessage.speed = speed;
 
     m_pubLabellerMotors.publish(motorMessage);
+
+    pMutex->unlock();
+
+    delete pMutex;
+}
+
+void RosThread::messageInk(bool enabled, QString bbd)
+{
+    qDebug() << "messaging ink" << enabled << bbd;
+    QMutex* pMutex = new QMutex();
+    pMutex->lock();
+
+    opinau_msgs::ink inkMessage;
+    inkMessage.enabled = enabled;
+    inkMessage.bbd_lot = bbd.toStdString();
+
+    m_pubInk.publish(inkMessage);
 
     pMutex->unlock();
 

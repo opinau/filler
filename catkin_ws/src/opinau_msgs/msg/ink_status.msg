@@ -1,1 +1,2 @@
 bool label_present
+int16 input_voltage

@@ -45,29 +45,32 @@ void loop()
 {
     nh.spinOnce();
     delay(10);
-    if (enabled)
+    int input_voltage = analogRead(label_sensor);
+    bool label_present = input_voltage < 400;
+    status.label_present = label_present;
+    status.input_voltage = input_voltage;
+
+    if (label_present)
     {
-        bool label_present = analogRead(label_sensor) == 0;
-        if (label_present)
+        if (enabled)
         {
             printing = true;
-            //digitalWrite(led_test, HIGH);
             delay(1000);
+            digitalWrite(led_test, HIGH);
+
             spray_lot(bbd_lot);
-            status.label_present = true;
+            digitalWrite(led_test, HIGH);
         }
-        else
+    }
+    else
+    {
+        if (printing)
         {
-            status.label_present = true;
-
-            if (printing)
-            {
-                printing = false;
-            }
-
-            // TODO: Tell the labeller motor 1 to stop
-            // or let's do that from brain / GUI?
+            printing = false;
         }
+
+        // TODO: Tell the labeller motor 1 to stop
+        // or let's do that from brain / GUI?
     }
 
     ink_status_pub.publish(&status);
@@ -94,4 +97,14 @@ void spray_letter(int letter)
             MyInkShield.spray_ink(strip);
         }
     }
+}
+
+void spray_blackout()
+{
+    MyInkShield.spray_ink(0x0FFF);
+
+    // Other patterns:
+    // (every other nozzle 0x0AAA = 0000101010101010)
+    // (every other nozzle 0x0555 = 0000010101010101)
+    // (my pattern 0x0444 = 0000111111011111)
 }

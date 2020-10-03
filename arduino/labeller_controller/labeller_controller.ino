@@ -5,7 +5,8 @@ const int STEPS_PER_REVOLUTION = 200;
 const int TOP_SPEED_DELAY = 3;
 const int TOP_SPEED = 128;
 
-struct Motor {
+struct Motor
+{
   byte step_pin;
   byte direction_pin;
   byte enable_pin;
@@ -18,6 +19,7 @@ struct Motor {
 
 Motor motor_0 = {2, 3, 4, TOP_SPEED_DELAY, false, false, true};
 Motor motor_1 = {5, 6, 7, TOP_SPEED_DELAY, false, false, true};
+Motor motor_2 = {8, 9, 10, TOP_SPEED_DELAY, false, false, true};
 
 ros::NodeHandle nh;
 
@@ -64,14 +66,20 @@ void motor_message_cb(const opinau_msgs::motor &msg)
   {
     adjust_motor_parameters(msg, &motor_0);
   }
-  else {
+  else if (msg.index == 1)
+  {
     adjust_motor_parameters(msg, &motor_1);
+  }
+  else
+  {
+    adjust_motor_parameters(msg, &motor_2);
   }
 }
 
 ros::Subscriber<opinau_msgs::motor> motor_sub("labeller_motors", &motor_message_cb);
 
-void run_motor(Motor motor) {
+void run_motor(Motor motor)
+{
   if (motor.running)
   {
     digitalWrite(motor.step_pin, HIGH);
@@ -81,7 +89,8 @@ void run_motor(Motor motor) {
   }
 }
 
-void setup_motor(Motor motor) {
+void setup_motor(Motor motor)
+{
   pinMode(motor.step_pin, OUTPUT);
   pinMode(motor.enable_pin, OUTPUT);
   pinMode(motor.direction_pin, OUTPUT);
@@ -99,6 +108,7 @@ void setup()
 
   setup_motor(motor_0);
   setup_motor(motor_1);
+  setup_motor(motor_2);
 }
 
 void loop()
@@ -107,4 +117,5 @@ void loop()
 
   run_motor(motor_0);
   run_motor(motor_1);
+  run_motor(motor_2);
 }

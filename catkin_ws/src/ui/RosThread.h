@@ -38,10 +38,12 @@ public:
     void run();
     void test();
     void messageLabellerMotor(int, bool, int);
+    void messageInk(bool, QString);
+
 
   signals:
     void newPose(double, double, double);
-    void inkStatusChanged(bool labelPresent);
+    void inkStatusChanged(QVariant labelPresent);
 
 private:
   int m_Init_argc;
@@ -60,7 +62,9 @@ private:
 
   QThread* m_pThread;
 
-  ros::Subscriber pose_listener;
+  ros::Subscriber m_subInkStatus;
   ros::Publisher m_pubLabellerMotors;
+  ros::Publisher m_pubInk;
+
 };
 #endif

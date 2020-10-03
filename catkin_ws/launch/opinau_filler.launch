@@ -20,14 +20,13 @@
 
 <node pkg="ui" type= "ui" name = "ui" />
 
-
 <node name = "labeller_nano" pkg="rosserial_python"    type="serial_node.py">
 <param name = "port" type = "string" value = "/dev/ttyUSB0"/>
 <param name = "baud" type = "int" value = "115200"/>
 </node>
 
-<!--<node name = "star1_nano" pkg="rosserial_python"    type="serial_node.py">
-<param name = "port" type = "string" value = "/dev/ttyUSB1"/>
+<!--<node name = "ink_mega" pkg="rosserial_python"    type="serial_node.py">
+<param name = "port" type = "string" value = "/dev/ttyACM0"/>
 <param name = "baud" type = "int" value = "115200"/>
 </node>-->
 

@@ -10,5 +10,6 @@
         <file>JogConsole.qml</file>
         <file>MotorJog.qml</file>
         <file>LabelSensor.qml</file>
+        <file>InkControl.qml</file>
     </qresource>
 </RCC>

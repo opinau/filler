@@ -5,13 +5,14 @@ Window {
     id: mainWindow
 
     visible: true
-    width: 640
+    width: 700
     height: 640
     title: qsTr("Hello World")
     color: "black"
 
-    function inkStatusSlot() {
-        console.log("in qml slot")
+    //objectName: "ros"
+
+    function onInkStatusChanged(labelPresent) {
         labelSensor.labelPresent = labelPresent
     }
 
@@ -56,11 +57,11 @@ Window {
         target: testBottle
         path: Path {
             startX: 0; startY: 300
-            PathLine { x: 50; y: 300}
-            PathArc { x: 100; y: 300; radiusX: 25; radiusY: 25}
-            PathLine { x: 150; y: 300}
-            PathArc { x: 200; y: 300; radiusX: 25; radiusY: 25}
-            PathLine { x: 250; y: 300}
+            PathLine { x: 50; y: 300 }
+            PathArc { x: 100; y: 300; radiusX: 25; radiusY: 25 }
+            PathLine { x: 150; y: 300 }
+            PathArc { x: 200; y: 300; radiusX: 25; radiusY: 25 }
+            PathLine { x: 250; y: 300 }
         }
     }
 
@@ -97,5 +98,4 @@ Window {
             ros.test()
         }
     }
-
 }
