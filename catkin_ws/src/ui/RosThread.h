@@ -21,25 +21,18 @@ public:
   RosThread(int argc, char** pArgv, const char* topic = "/odom");
   virtual ~RosThread();
 
-  double getXPos();
-  double getXSpeed();
-  double getASpeed();
-  double getYPos();
-  double getAPos();
-
   bool init();
 
   void inkStatusCallback(const opinau_msgs::ink_status&);
 
   void setPose(QList<double> to_set);
 
-
   public slots:
     void run();
     void test();
     void messageLabellerMotor(int, bool, int);
+    void messageLabellerRelay(int, bool);
     void messageInk(bool, QString);
-
 
   signals:
     void newPose(double, double, double);
@@ -50,20 +43,11 @@ private:
   char** m_pInit_argv;
   const char* m_topic;
 
-  double m_speed;
-  double m_angle;
-
-  double m_xPos;
-  double m_yPos;
-  double m_aPos;
-
-  double m_maxRange;
-  double m_minRange;
-
   QThread* m_pThread;
 
   ros::Subscriber m_subInkStatus;
   ros::Publisher m_pubLabellerMotors;
+  ros::Publisher m_pubLabellerRelays;
   ros::Publisher m_pubInk;
 
 };

@@ -1,9 +1,12 @@
 #include <ros.h>
 #include <opinau_msgs/motor.h>
+#include <opinau_msgs/relay.h>
 
 const int STEPS_PER_REVOLUTION = 200;
 const int TOP_SPEED_DELAY = 3;
 const int TOP_SPEED = 128;
+
+const int RELAY_PIN = 12;
 
 struct Motor
 {
@@ -76,7 +79,23 @@ void motor_message_cb(const opinau_msgs::motor &msg)
   }
 }
 
+void relay_message_cb(const opinau_msgs::relay &msg)
+{
+  if (msg.index == 0)
+  {
+    if (msg.enabled)
+    {
+      digitalWrite(RELAY_PIN, HIGH);
+    }
+    else
+    {
+      digitalWrite(RELAY_PIN, LOW);
+    }
+  }
+}
+
 ros::Subscriber<opinau_msgs::motor> motor_sub("labeller_motors", &motor_message_cb);
+ros::Subscriber<opinau_msgs::relay> relay_sub("labeller_relays", &relay_message_cb);
 
 void run_motor(Motor motor)
 {
@@ -105,6 +124,10 @@ void setup()
   nh.initNode();
 
   nh.subscribe(motor_sub);
+  nh.subscribe(relay_sub);
+
+  // Setup relay
+  pinMode(RELAY_PIN, OUTPUT);
 
   setup_motor(motor_0);
   setup_motor(motor_1);

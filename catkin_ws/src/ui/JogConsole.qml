@@ -22,5 +22,9 @@ Item {
         InkControl {
 
         }
+
+        RelaySwitch {
+            index: 0
+        }
     }
 }

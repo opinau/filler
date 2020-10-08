@@ -5,7 +5,7 @@ Window {
     id: mainWindow
 
     visible: true
-    width: 700
+    width: 900
     height: 640
     title: qsTr("Hello World")
     color: "black"

@@ -11,5 +11,6 @@
         <file>MotorJog.qml</file>
         <file>LabelSensor.qml</file>
         <file>InkControl.qml</file>
+        <file>RelaySwitch.qml</file>
     </qresource>
 </RCC>

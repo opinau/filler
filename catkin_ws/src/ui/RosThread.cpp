@@ -2,6 +2,7 @@
 #include "std_msgs/String.h"
 #include "opinau_msgs/motor.h"
 #include "opinau_msgs/ink.h"
+#include "opinau_msgs/relay.h"
 
 RosThread::RosThread(int argc, char** pArgv, const char* topic) : m_Init_argc(argc), m_pInit_argv(pArgv), m_topic(topic)
 { /** Constructor for the robot thread **/
@@ -35,6 +36,8 @@ bool RosThread::init()
 
     m_pubLabellerMotors = nh.advertise<opinau_msgs::motor>("labeller_motors", 5);
     m_pubInk = nh.advertise<opinau_msgs::motor>("ink", 5);
+    m_pubLabellerRelays = nh.advertise<opinau_msgs::relay>("labeller_relays", 5);
+
 
     m_subInkStatus = nh.subscribe("ink_status", 1, &RosThread::inkStatusCallback, this);
     m_pThread->start();
@@ -90,6 +93,24 @@ void RosThread::messageLabellerMotor(int index, bool enabled, int speed)
     delete pMutex;
 }
 
+void RosThread::messageLabellerRelay(int index, bool enabled)
+{
+    qDebug() << "messaging relay" << index << enabled;
+    // Do we need this lock
+    QMutex* pMutex = new QMutex();
+    pMutex->lock();
+
+    opinau_msgs::relay relayMessage;
+    relayMessage.index = index;
+    relayMessage.enabled = enabled;
+
+    m_pubLabellerRelays.publish(relayMessage);
+
+    pMutex->unlock();
+
+    delete pMutex;
+}
+
 void RosThread::messageInk(bool enabled, QString bbd)
 {
     qDebug() << "messaging ink" << enabled << bbd;
@@ -105,26 +126,4 @@ void RosThread::messageInk(bool enabled, QString bbd)
     pMutex->unlock();
 
     delete pMutex;
-}
-
-double RosThread::getXSpeed()
-{
-    return m_speed;
-}
-double RosThread::getASpeed()
-{
-    return m_angle;
-}
-
-double RosThread::getXPos()
-{
-    return m_xPos;
-}
-double RosThread::getYPos()
-{
-    return m_yPos;
-}
-double RosThread::getAPos()
-{
-    return m_aPos;
 }
