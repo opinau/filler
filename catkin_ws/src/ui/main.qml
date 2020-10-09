@@ -5,10 +5,14 @@ Window {
     id: mainWindow
 
     visible: true
-    width: 900
-    height: 640
-    title: qsTr("Hello World")
+    width: 950
+    height: 650
+    title: "OPINAU-FILLER"
     color: "black"
+
+//    onClosing :{
+//        Qt.exit(0)
+//    }
 
     //objectName: "ros"
 
@@ -16,17 +20,17 @@ Window {
         labelSensor.labelPresent = labelPresent
     }
 
-//    Connections {
-//        target: ros
-//        onInkStatusChanged: {
-//            labelSensor.labelPresent = labelPresent
-//        }
-//    }
+    //    Connections {
+    //        target: ros
+    //        onInkStatusChanged: {
+    //            labelSensor.labelPresent = labelPresent
+    //        }
+    //    }
 
     Text {
         id: name
         color: "white"
-        text: "Bottle x: " + testBottle.x + " y: " + testBottle.y
+        text: "Bottle x: " + testBottle.x + " y: " + testBottle.y + " progress: " + bottlePath.progress
     }
 
     LabelSensor {
@@ -36,51 +40,61 @@ Window {
     }
 
     Conveyor {
+        id: conveyor
+        speed: 0
         x: 50
-        y: 100
+        y: 300
         height: 90
-        width: 500
+        width: 700
 
         MouseArea {
             anchors.fill: parent
             onClicked:
             {
-                console.log("hello")
-                bottlePath.start()
+                bottlePathAnimation.start()
             }
         }
     }
 
-    PathAnimation {
+    NumberAnimation {
+        id: bottlePathAnimation
+        target: bottlePath
+        property: "progress"
+        from: 0
+        to: 1
+        duration: 10000
+    }
+
+    PathInterpolator {
         id: bottlePath
-        duration: 1000
-        target: testBottle
         path: Path {
-            startX: 0; startY: 300
-            PathLine { x: 50; y: 300 }
-            PathArc { x: 100; y: 300; radiusX: 25; radiusY: 25 }
-            PathLine { x: 150; y: 300 }
-            PathArc { x: 200; y: 300; radiusX: 25; radiusY: 25 }
-            PathLine { x: 250; y: 300 }
+            startX: 0; startY: testBottle.conveyorCentreY
+            PathLine { x: 50; y: testBottle.conveyorCentreY }
+            PathArc { x: 100; y: testBottle.conveyorCentreY; radiusX: 25; radiusY: 25 }
+            PathLine { x: 150; y: testBottle.conveyorCentreY }
+            PathArc { x: 200; y: testBottle.conveyorCentreY; radiusX: 25; radiusY: 25 }
+            PathLine { x: 600; y: testBottle.conveyorCentreY }
         }
     }
 
     Bottle {
+        property int conveyorCentreY: (conveyor.y + (conveyor.height / 2)) - height / 2
         id: testBottle
-        x: 0
-        y: 300
+
+        x: bottlePath.x
+        y: bottlePath.y
     }
 
     LabellerStarwheel {
-        x: 100
-        y: 100
+        x: 160
+        y: 160
         height: 150
         width: 150
     }
 
     FillerStarwheel {
-        x: 300
-        y: 100
+        x: 406
+        y: 54
         height: 300
         width: 300
     }
