@@ -35,7 +35,7 @@ bool RosThread::init()
     ros::NodeHandle nh;
 
     m_pubLabellerMotors = nh.advertise<opinau_msgs::motor>("labeller_motors", 5);
-    m_pubInk = nh.advertise<opinau_msgs::motor>("ink", 5);
+    m_pubInk = nh.advertise<opinau_msgs::ink>("ink", 5);
     m_pubLabellerRelays = nh.advertise<opinau_msgs::relay>("labeller_relays", 5);
 
 
