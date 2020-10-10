@@ -3,6 +3,7 @@
 #include <QQmlContext>
 #include <QQuickWindow>
 #include <RosThread.h>
+#include <BusinessLogic.h>
 
 int main(int argc, char* argv[])
 {
@@ -28,14 +29,17 @@ int main(int argc, char* argv[])
     engine.load(url);
 
     engine.rootContext()->setContextProperty("ros", &ros);
+    // setContextObject() business logic--> here or there
+
+    // use properties from C++ and animate on change in QML
 
     QObject* mainWindow = engine.rootObjects().at(0);
-    QObject::connect(&ros, SIGNAL(inkStatusChanged(QVariant)), mainWindow, SLOT(onInkStatusChanged(QVariant)));
+    //QObject::connect(&ros, SIGNAL(inkStatusChanged(QVariant)), mainWindow, SLOT(onInkStatusChanged(QVariant)));
 
     QObject::connect(&engine, &QQmlApplicationEngine::exit,
                      [&](int retCode){qDebug() << "quitting with" << retCode; app.exit(retCode);});
 
-    // Clean up RosThread before exiting?
+    BusinessLogic business(&app, &ros, (QQuickWindow*)mainWindow);
 
     return app.exec();
 }

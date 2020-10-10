@@ -35,8 +35,7 @@ public:
     void messageInk(bool, QString);
 
   signals:
-    void newPose(double, double, double);
-    void inkStatusChanged(QVariant labelPresent);
+    void inkStatusChanged(bool labelPresent);
 
 private:
   int m_Init_argc;

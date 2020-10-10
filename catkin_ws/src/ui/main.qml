@@ -34,6 +34,7 @@ Window {
     }
 
     LabelSensor {
+        objectName: "labelSensor"
         id: labelSensor
         height: 20
         width: 20
