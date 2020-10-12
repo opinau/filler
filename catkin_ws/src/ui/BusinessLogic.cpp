@@ -33,15 +33,14 @@ void BusinessLogic::setLabelPresent(bool value)
 {
     if (m_labelPresent != value) {
         m_labelPresent = value;
-            emit labelPresentChanged();
-
-}
+        emit labelPresentChanged();
+    }
 
     // Update UI --> is this the right approach
     // Perhaps use Q_PROPRETIES accesses from QML?
 
     // Would it work with the more dynamic bottles?
-//    QObject *labelSensor = m_qml->findChild<QObject*>("labelSensor");
-//    if (labelSensor)
-//        labelSensor->setProperty("labelPresent", QVariant(value));
+    //    QObject *labelSensor = m_qml->findChild<QObject*>("labelSensor");
+    //    if (labelSensor)
+    //        labelSensor->setProperty("labelPresent", QVariant(value));
 }

@@ -34,8 +34,11 @@ Window {
     }
 
     LabelSensor {
-        objectName: "labelSensor"
+        //objectName: "labelSensor"
         id: labelSensor
+
+        labelPresent: business.labelPresent
+
         height: 20
         width: 20
     }
