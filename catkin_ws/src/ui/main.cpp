@@ -4,7 +4,7 @@
 #include <QQuickWindow>
 #include <RosThread.h>
 #include <BusinessLogic.h>
-
+#include <BottleModel.h>
 int main(int argc, char* argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -26,19 +26,14 @@ int main(int argc, char* argv[])
     },
     Qt::QueuedConnection);
 
-    engine.load(url);
 
-    engine.rootContext()->setContextProperty("ros", &ros);
 
-    QObject* mainWindow = engine.rootObjects().at(0);
-    //QObject::connect(&ros, SIGNAL(inkStatusChanged(QVariant)), mainWindow, SLOT(onInkStatusChanged(QVariant)));
-
-    QObject::connect(&engine, &QQmlApplicationEngine::exit,
-                     [&](int retCode){qDebug() << "quitting with" << retCode; app.exit(retCode);});
-
-    BusinessLogic business(&app, &ros, (QQuickWindow*)mainWindow);
+    BusinessLogic business(&app, &ros, &engine);
 
     engine.rootContext()->setContextProperty("business", &business);
+    engine.rootContext()->setContextProperty("ros", &ros);
+
+    engine.load(url);
 
     return app.exec();
 }

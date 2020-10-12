@@ -1,16 +1,29 @@
 #include "BusinessLogic.h"
 #include <RosThread.h>
-#include <QQuickWindow>
+#include <QQmlApplicationEngine>
+#include <BottleModel.h>
 
-BusinessLogic::BusinessLogic(QObject *parent, RosThread *rosThread, QQuickWindow *qml)
+BusinessLogic::BusinessLogic(QObject *parent, RosThread *rosThread, QQmlApplicationEngine *qml)
     : QObject(parent), m_ros(rosThread), m_qml(qml)
 {
     connect(m_ros, &RosThread::inkStatusChanged, this, &BusinessLogic::onInkStatusChanged);
+
+    m_bottleModel = new BottleModel;
+    m_bottleModel->addBottle(Bottle(0.0, "Wolf", "Medium"));
+    m_bottleModel->addBottle(Bottle(0.5, "Polar bear", "Large"));
+    m_bottleModel->addBottle(Bottle(1.0, "Quoll", "Small"));
+
+    qmlRegisterUncreatableType<BottleModel>("hr.openbook.opinau", 1, 0, "BottleModel", "Type not available in QML");
 }
 
 void BusinessLogic::onInkStatusChanged(bool labelPresent)
 {
     setLabelPresent(labelPresent);
+}
+
+BottleModel *BusinessLogic::getBottleModel()
+{
+    return m_bottleModel;
 }
 
 int BusinessLogic::getConveyorSpeed() const

@@ -53,6 +53,8 @@ if(ANDROID)
       RosThread.h
       BusinessLogic.cpp
       BusinessLogic.h
+      BottleModel.cpp
+      BottleModel.h
       qml.qrc
     )
 else()
@@ -62,6 +64,8 @@ else()
       RosThread.h
       BusinessLogic.cpp
       BusinessLogic.h
+      BottleModel.cpp
+      BottleModel.h
       qml.qrc
     )
 endif()

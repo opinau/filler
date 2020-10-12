@@ -1,6 +1,11 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 
+import QtQml.Models 2.1
+
+import hr.openbook.opinau 1.0
+
+
 Window {
     id: mainWindow
 
@@ -10,31 +15,32 @@ Window {
     title: "OPINAU-FILLER"
     color: "black"
 
-//    onClosing :{
-//        Qt.exit(0)
-//    }
+    property double bottleSize: 25
+    property double conveyorCentreY: (conveyor.y + (conveyor.height / 2)) - bottleSize
+    property double conveyorStartX: conveyor.x
 
-    //objectName: "ros"
+    Repeater {
+        model: business.bottleModel
+        delegate:         Bottle {
+            progressAlong: progress
+        }
+    }
+
+    //    onClosing :{
+    //        Qt.exit(0)
+    //    }
 
     function onInkStatusChanged(labelPresent) {
         labelSensor.labelPresent = labelPresent
     }
 
-    //    Connections {
-    //        target: ros
-    //        onInkStatusChanged: {
-    //            labelSensor.labelPresent = labelPresent
-    //        }
-    //    }
-
     Text {
         id: name
         color: "white"
-        text: "Bottle x: " + testBottle.x + " y: " + testBottle.y + " progress: " + bottlePath.progress
+        //text: "Bottle x: " + testBottle.x + " y: " + testBottle.y + " progress: " + bottlePath.progress
     }
 
     LabelSensor {
-        //objectName: "labelSensor"
         id: labelSensor
 
         labelPresent: business.labelPresent
@@ -51,42 +57,15 @@ Window {
         height: 90
         width: 700
 
+        opacity: 0.5
+
         MouseArea {
             anchors.fill: parent
             onClicked:
             {
-                bottlePathAnimation.start()
+                console.log(business.bottleModel)
             }
         }
-    }
-
-    NumberAnimation {
-        id: bottlePathAnimation
-        target: bottlePath
-        property: "progress"
-        from: 0
-        to: 1
-        duration: 10000
-    }
-
-    PathInterpolator {
-        id: bottlePath
-        path: Path {
-            startX: 0; startY: testBottle.conveyorCentreY
-            PathLine { x: 50; y: testBottle.conveyorCentreY }
-            PathArc { x: 100; y: testBottle.conveyorCentreY; radiusX: 25; radiusY: 25 }
-            PathLine { x: 150; y: testBottle.conveyorCentreY }
-            PathArc { x: 200; y: testBottle.conveyorCentreY; radiusX: 25; radiusY: 25 }
-            PathLine { x: 600; y: testBottle.conveyorCentreY }
-        }
-    }
-
-    Bottle {
-        property int conveyorCentreY: (conveyor.y + (conveyor.height / 2)) - height / 2
-        id: testBottle
-
-        x: bottlePath.x
-        y: bottlePath.y
     }
 
     LabellerStarwheel {
