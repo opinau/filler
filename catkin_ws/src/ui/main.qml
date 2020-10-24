@@ -3,7 +3,7 @@ import QtQuick.Window 2.12
 
 import QtQml.Models 2.1
 
-import hr.openbook.opinau 1.0
+//import hr.openbook.opinau 1.0
 
 
 Window {
@@ -15,9 +15,19 @@ Window {
     title: "OPINAU-FILLER"
     color: "black"
 
-    property double bottleSize: 25
+    property double bottleSize: 5
     property double conveyorCentreY: (conveyor.y + (conveyor.height / 2)) - bottleSize
     property double conveyorStartX: conveyor.x
+
+    property double phase1Length: 50
+    property double phase2Length: 50
+    property real phase2Radius: 100
+    property double phase3Length: 250
+    property double phase4Length: 100
+    property real phase4Radius: 200
+
+    property double phase5Length: 200
+
 
     Repeater {
         model: business.bottleModel
@@ -69,17 +79,17 @@ Window {
     }
 
     LabellerStarwheel {
-        x: 160
-        y: 160
+        x: conveyorStartX + phase1Length + (phase2Length / 2) - (width / 2)
+        y: conveyorCentreY - 52 - (height / 2)
         height: 150
-        width: 150
+        width: height
     }
 
     FillerStarwheel {
-        x: 406
-        y: 54
+        x: conveyorStartX + phase1Length + phase2Length + phase3Length + (phase4Length / 2) - (width / 2)
+        y: conveyorCentreY - 157 - (height / 2)
         height: 300
-        width: 300
+        width: height
     }
 
     JogConsole {

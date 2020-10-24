@@ -9,11 +9,13 @@ BusinessLogic::BusinessLogic(QObject *parent, RosThread *rosThread, QQmlApplicat
     connect(m_ros, &RosThread::inkStatusChanged, this, &BusinessLogic::onInkStatusChanged);
 
     m_bottleModel = new BottleModel;
-    m_bottleModel->addBottle(Bottle(0.0, "Wolf", "Medium"));
-    m_bottleModel->addBottle(Bottle(0.5, "Polar bear", "Large"));
-    m_bottleModel->addBottle(Bottle(1.0, "Quoll", "Small"));
 
-    qmlRegisterUncreatableType<BottleModel>("hr.openbook.opinau", 1, 0, "BottleModel", "Type not available in QML");
+    float progress = 0.0;
+
+    for (int i = 0; i < 100; i++) {
+        m_bottleModel->addBottle(Bottle(progress, "Wolf", "Medium"));
+        progress += 0.01;
+    }
 }
 
 void BusinessLogic::onInkStatusChanged(bool labelPresent)

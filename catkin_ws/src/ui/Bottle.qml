@@ -3,11 +3,12 @@ import QtQuick 2.0
 Item {
     id: root
     property alias progressAlong: interpolator.progress
+    property alias path: interpolator.path
 
     x: interpolator.x
     y: interpolator.y
 
-    height: 50
+    height: 10
 
     z: 1
 
@@ -22,12 +23,13 @@ Item {
     PathInterpolator {
         id: interpolator
         path: Path {
+            id: bottlesPath
             startX: conveyorStartX; startY: conveyorCentreY
-            PathLine { x: conveyorStartX + 50; y: conveyorCentreY }
-            PathArc { x: conveyorStartX + 100; y: conveyorCentreY; radiusX: 25; radiusY: 25 }
-            PathLine { x: conveyorStartX + 150; y: conveyorCentreY }
-            PathArc { x: conveyorStartX + 200; y: conveyorCentreY; radiusX: 25; radiusY: 25 }
-            PathLine { x: conveyorStartX + 600; y: conveyorCentreY }
+            PathLine { relativeX: phase1Length; y: conveyorCentreY }
+            PathArc { id: phase2Arc; relativeX: phase2Length; y: conveyorCentreY; radiusX: phase2Radius; radiusY: phase2Radius; useLargeArc: true }
+            PathLine { relativeX: phase3Length; y: conveyorCentreY }
+            PathArc { relativeX: phase4Length; y: conveyorCentreY; radiusX: phase4Radius; radiusY: phase4Radius; useLargeArc: true }
+            PathLine { relativeX: phase5Length; y: conveyorCentreY }
         }
     }
 }
