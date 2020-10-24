@@ -52,7 +52,7 @@ void adjust_motor_parameters(const opinau_msgs::motor &msg, Motor *motor)
     motor->forwards = true;
   }
 
-  if (msg.speed == 0)
+  if (msg.speed == 0 || !msg.enabled)
   {
     motor->running = false;
   }
