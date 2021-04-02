@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #include <Stepper.h>
 #include <ros.h>
 #include <std_msgs/Float64.h>

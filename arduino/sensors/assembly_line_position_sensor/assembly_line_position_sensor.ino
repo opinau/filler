@@ -33,6 +33,7 @@ Please consult provided documentation for more details:
 
 */
 
+#include <Arduino.h>
 
 // defining sensor pins, please note reverse order (device only operates / tracks objects in one direction)
 byte sensor_1= 12;

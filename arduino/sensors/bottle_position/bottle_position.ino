@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #include <SoftwareSerial.h>
 #include <String.h>
 #include <ros.h>

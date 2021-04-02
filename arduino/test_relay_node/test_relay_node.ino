@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 int relayArray[] = {2,3,4,5,6,7,8,9};
 
 int delayTime = 100;

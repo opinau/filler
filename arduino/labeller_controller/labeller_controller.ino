@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #include <ros.h>
 #include <opinau_msgs/motor.h>
 #include <opinau_msgs/relay.h>

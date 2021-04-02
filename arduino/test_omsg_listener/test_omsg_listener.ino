@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #include "ros.h" //does not affect running
 #include "std_msgs/String.h"
 #include "std_msgs/Bool.h"
