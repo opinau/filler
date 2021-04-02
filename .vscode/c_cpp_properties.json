@@ -9,7 +9,10 @@
                 "/home/marijan/.arduino15/packages/arduino/hardware/avr/1.8.1/**",
                 "/home/marijan/.arduino15/packages/arduino/hardware/avr/1.8.1/cores/arduino",
                 "/home/igor/opt/arduino-1.8.13/hardware/arduino/avr/**",
-                "/home/igor/opt/arduino-1.8.13/tools/**"
+                "/home/igor/opt/arduino-1.8.13/tools/**",
+                "/home/igor/opt/arduino-1.8.13/hardware/tools/**",
+                "/home/igor/opt/arduino-1.8.13/libraries/**",
+                "/home/igor/Arduino/libraries/**"
             ],
             "intelliSenseMode": "gcc-x64",
             "compilerPath": "/usr/bin/gcc",
