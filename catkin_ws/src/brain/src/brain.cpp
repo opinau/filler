@@ -3,7 +3,7 @@
 #include "std_msgs/Bool.h"
 
 #include <sstream>
-#include "messages/opinau_inkshield.h"
+#include "opinau_msgs/ink.h"
 
 // Callback function ADDED
 
@@ -60,7 +60,7 @@ int main(int argc, char** argv)
   ros::Publisher conveyor_instructions_pub = n.advertise<std_msgs::String>("conveyor_instructions", 1000);
 
   ros::Publisher labelprint_instructions_pub =
-      n.advertise<messages::opinau_inkshield>("labelprint_instructions", 1000);
+      n.advertise<opinau_msgs::ink>("labelprint_instructions", 1000);
 
   ros::Publisher labelapply_instructions_pub = n.advertise<std_msgs::String>("labelapply_instructions", 1000);
   ros::Publisher labelpull_instructions_pub = n.advertise<std_msgs::String>("labelpull_instructions", 1000);
@@ -94,9 +94,9 @@ int main(int argc, char** argv)
     99      * in the constructor above.
     100      */
 
-    messages::opinau_inkshield ink_msg;
-    ink_msg.inkshield_on_off = 0;
-    ink_msg.inkshield_date_lot = "NEW DATE, NEW DATE, NEW DATE";
+    opinau_msgs::ink ink_msg;
+    ink_msg.enabled = 0;
+    ink_msg.bbd_lot = "NEW DATE, NEW DATE, NEW DATE";
 
     starwheel1_instructions_pub.publish(msg);
     starwheel2_instructions_pub.publish(msg);
