@@ -30,7 +30,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   roslint
-  messages
+  opinau_msgs
 )
 
 include_directories(

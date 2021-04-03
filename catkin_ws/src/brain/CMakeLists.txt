@@ -3,21 +3,21 @@ project(brain)
 
 ## Find catkin and any catkin packages
 find_package(catkin REQUIRED COMPONENTS
-roscpp 
-rospy 
-std_msgs 
-genmsg
-message_generation
-roslint
-messages
-)
+        roscpp
+        rospy
+        std_msgs
+        genmsg
+        message_generation
+        roslint
+        opinau_msgs
+        )
 
 
 roslint_cpp()
 
 ## Declare a catkin package
 catkin_package(
-    CATKIN_DEPENDS message_runtime
+        CATKIN_DEPENDS message_runtime
 )
 
 ## Build talker and listener
